@@ -1,5 +1,5 @@
 Name:		splice-testing-pageobjects
-Version:	0.1
+Version:	0.2
 Release:	1%{?dist}
 Summary:	Splice WebUI page objects for test case automation
 
@@ -33,5 +33,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/pageobjects/*.py*
 
 %changelog
+* Wed Jul 24 2013 dparalen <vetrisko@gmail.com> 0.2-1
+- new package built with tito
+
 
 
