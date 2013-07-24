@@ -14,5 +14,5 @@ setup(name='pageobjects',
             'Intended Audience :: Developers',
             'Development Status :: 4 - Beta'
     ],
-    packages = find_packages(),
+    packages = find_packages(exclude=['tests']),
     )
