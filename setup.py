@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-setup(name='splice_testing_pageobjects',
+setup(name='pageobjects',
     version=0.1,
     description='Page objects of Splice WebUI for test automation',
     author='dparalen',
