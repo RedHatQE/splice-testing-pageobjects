@@ -1,0 +1,16 @@
+HOSTS:
+  sam: &SAM_HOST
+    address: sam.example.com
+    username: root
+    keypath: '~/.ssh/id_rsa'
+
+ROLES:
+  KATELLO:
+    host: *SAM_HOST
+    username: admin
+    password: admin
+    url: 'sam.example.com'
+
+  SELENIUM:
+    display: ':0'
+
