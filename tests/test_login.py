@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-import splice_webui_tests as SWT
+import tests
 import sys, unittest, re, time, os.path, logging, nose, selenium, namespace
 from pageobjects.login import LoginPageObject, LogoutPageObject, login_ctx
 from selenium_wrapper import SE
 
-KATELLO = SWT.ROLES.KATELLO
+KATELLO = tests.ROLES.KATELLO
 
 def setUpModule():
     '''Sanity test KATELLO role'''
