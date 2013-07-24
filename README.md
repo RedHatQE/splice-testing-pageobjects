@@ -4,4 +4,7 @@
 
 
 #### usage
-See the tests directory for example usage in test case implementation
+* See the tests directory for example usage in test case implementation
+* To execute test cases:
+ * copy tests/inventory.yml ./ and update
+ * run nosetests --with-webuiscreenshots --keep-passing-screenshots
