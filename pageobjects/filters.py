@@ -38,7 +38,7 @@ class Filter(MenuPageElement):
     def __init__(self, name):
         self._name = name
         # instance-level locator; monkeypatching for each filter
-        self._locator = types.MethodType(lambda self: locators['filters.filter'](self._name), self)
+        self._locator = events.appears(types.MethodType(lambda self: locators['filters.filter'](self._name), self))
         self._selected_locator = types.MethodType(lambda self: locators['filters.filter.selected'](self._name), self)
 
     def close(self):
