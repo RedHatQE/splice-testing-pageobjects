@@ -9,7 +9,7 @@ ROLES:
     host: *SAM_HOST
     username: admin
     password: admin
-    url: 'sam.example.com'
+    url: 'https://sam.example.com'
 
   SELENIUM:
     display: ':0'
