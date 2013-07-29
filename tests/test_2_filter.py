@@ -18,7 +18,7 @@ def setUpModule():
 def tearDownModule():
     pass
 
-class DefaultRhelFilterTestCase(unittest.TestCase):
+class BaseFilterTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # reset SE driver 
@@ -29,8 +29,22 @@ class DefaultRhelFilterTestCase(unittest.TestCase):
     def setUp(self):
         SE.get(KATELLO.url)
         self.filters = filters.Filters()
-        self.report_filter = self.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
         self.verificationErrors = []
+
+    def tearDown(self):
+        self.assertEqual([], self.verificationErrors)
+
+    @classmethod
+    def tearDownClass(cls):
+        SE.get(KATELLO.url)
+        logout()
+
+
+class DefaultRhelFilterTestCase(BaseFilterTestCase):
+    def setUp(self):
+        # navigate to the default filter
+        super(DefaultRhelFilterTestCase, self).setUp()
+        self.report_filter = self.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
 
     def test_1_open_reports_page(self):
         # TODO: assert something here ;)
@@ -58,16 +72,24 @@ class DefaultRhelFilterTestCase(unittest.TestCase):
         except AssertionError:
             self.report_filter.skip_json_export.click()
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
-            
-            
 
-    def tearDown(self):
-        self.assertEqual([], self.verificationErrors)
 
-    @classmethod
-    def tearDownClass(cls):
-        SE.get(KATELLO.url)
-        logout()
+class NewFilterTestCase(BaseFilterTestCase):
+
+    def test_1_select(self):
+        # navigate to new filter menu works
+        # FIXME: assert something here
+        self.filters.new_filter_menu.filter_name
+
+    def test_2_close(self):
+        self.filters.new_filter_menu.close()
+
+    def test_3_insert_name(self):
+        # check name can be inserted
+        self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
+        
+
+
 
 if __name__ == '__main__':
     nose.main()
