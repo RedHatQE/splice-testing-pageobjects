@@ -1,4 +1,5 @@
 from selenium.common.exceptions import NoSuchElementException
+from events import appears
 
 class MenuPageElement(object):
     '''element that requires selecting each time its attributes are accessed
@@ -19,7 +20,7 @@ class MenuPageElement(object):
         except NoSuchElementException as e:
             # nope --- click the menu and try again
             self._selector(self._locator())
-            self._selected_locator()
+            appears(self._selected_locator, timeout=5.0, message='selecting menu %s' % self)()
 
     def __getattribute__(self, attrname):
         '''to access attributes, menu instance has to be selected
@@ -30,5 +31,8 @@ class MenuPageElement(object):
         object.__getattribute__(self, '_select')()
         return object.__getattribute__(self, attrname)
 
-    def __get__(self, obj, cls=None):
-        return self._locator()
+    def __setattr__(self, attrname, value):
+        self._select()
+        self.__dict__[attrname] = value
+        
+
