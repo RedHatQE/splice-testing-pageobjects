@@ -50,7 +50,9 @@ class MenuPageElement(BasePageElement):
            all attributes that do not start with the '_' sign are preceeded with a _select() call
         '''
         if attrname.startswith('_'):
-            return super(BasePageElement, self).__getattribute__(attrname)
+            return super(MenuPageElement, self).__getattribute__(attrname)
         object.__getattribute__(self, '_select')()
         return object.__getattribute__(self, attrname)
 
+    def __get__(self, obj, cls=None):
+        return self._locator()
