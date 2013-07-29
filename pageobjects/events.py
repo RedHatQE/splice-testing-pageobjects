@@ -8,7 +8,8 @@ def appears(locator, timeout=5.0, message=""):
     selenium_wrapper.SE instead.
     '''
     def waitnlocate(*args, **kvargs):
-        WebDriverWait(SE, timeout=timeout).until(lambda x: locator(*args, **kvargs).is_displayed(), message=message)
-        return locator(*args, **kvargs)
+        e = WebDriverWait(SE, timeout=timeout).until(lambda x: locator(*args, **kvargs), message=message)
+        WebDriverWait(SE, timeout=timeout).until(lambda x: e.is_displayed(), message=message)
+        return e
 
     return waitnlocate
