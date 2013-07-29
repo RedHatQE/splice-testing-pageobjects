@@ -29,11 +29,12 @@ class MenuPageElement(BasePageElement):
     '''element that requires selecting each time its attributes are accessed
     _locator: to find the menu instance on a page
     _selected_locator: to determine whether the menu instance has already been selected
+    _selector: method to select self; applied to a Selenium page element
     Note: all attributes not prefixed with '_' sign are preceeded with a self._select() call
     '''
     _locator = staticmethod(lambda : None)
     _selected_locator = staticmethod(lambda : None)
-    _selector = staticmethod(lambda: None)
+    _selector = staticmethod(lambda x: None)
 
     def _select(self):
         '''if not selected, select'''
