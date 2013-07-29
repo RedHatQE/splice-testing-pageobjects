@@ -25,7 +25,7 @@ class LinkPageElement(BasePageElement):
     def click(self):
         self.localtor().click()
 
-class MenuPageElement(BasePageElement):
+class MenuPageElement(object):
     '''element that requires selecting each time its attributes are accessed
     _locator: to find the menu instance on a page
     _selected_locator: to determine whether the menu instance has already been selected
