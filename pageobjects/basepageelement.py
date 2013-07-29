@@ -33,6 +33,7 @@ class MenuPageElement(BasePageElement):
     '''
     _locator = staticmethod(lambda : None)
     _selected_locator = staticmethod(lambda : None)
+    _selector = staticmethod(lambda: None)
 
     def _select(self):
         '''if not selected, select'''
@@ -41,7 +42,7 @@ class MenuPageElement(BasePageElement):
             self._selected_locator()
         except NoSuchElementException as e:
             # nope --- click the menu and try again
-            self._locator().click()
+            self._selector(self._locator())
             self._selected_locator()
 
     def __getattribute__(self, attrname):
