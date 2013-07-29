@@ -33,7 +33,8 @@ class Filter(MenuPageElement):
     run_button = RunButton()
     remove_link = None
     encrypt_export = EncryptExport()
-    skip_json_export = SkipJsonExport() 
+    skip_json_export = SkipJsonExport()
+    _selector = staticmethod(lambda x: x.click())
 
     def __init__(self, name):
         self._name = name
