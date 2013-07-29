@@ -11,8 +11,16 @@ import types, time, events
 
 REDHAT_DEFAULT_FILTER_NAME=u'Red Hat Default Report'
 
-class FilterCloseLink(LinkPageElement):
-    locator = staticmethod(events.appears(locators['filters.filter.close_link']))
+class BaseFilterCloseLink(LinkPageElement):
+    locator = staticmethod(events.appears(locators['filters.filter.base.close_link']))
+
+class BaseFilterMenu(MenuPageElement):
+    '''few common things between New Filter Menu and Filter Menu'''
+    _selector = staticmethod(lambda x: x.click())
+    close_link = BaseFilterCloseLink()
+
+    def close(self):
+        self.close_link.click()
 
 class FilterRemoveLink(LinkPageElement):
     #locator = staticmethod(events.appears(locators['filters.filter.remove_link']))
@@ -27,24 +35,20 @@ class EncryptExport(InputPageElement):
 class SkipJsonExport(InputPageElement):
     locator = staticmethod(events.appears(locators['filters.filter.skip_json_export']))
 
-class Filter(MenuPageElement):
+
+class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
 
-    close_link = FilterCloseLink()
     run_button = RunButton()
     remove_link = None
     encrypt_export = EncryptExport()
     skip_json_export = SkipJsonExport()
-    _selector = staticmethod(lambda x: x.click())
 
     def __init__(self, name):
         self._name = name
         # instance-level locator; monkeypatching for each filter
         self._locator = events.appears(types.MethodType(lambda self: locators['filters.filter'](self._name), self))
         self._selected_locator = types.MethodType(lambda self: locators['filters.filter.selected'](self._name), self)
-
-    def close(self):
-        self.close_link.click()
 
     def run_report(self):
         self.run_button.click()
@@ -55,11 +59,17 @@ class Filter(MenuPageElement):
     def remove(self):
         pass
 
-class NewFilterObject(MenuPageElement):
-    pass
+class NewFilterNameInput(InputPageElement):
+    locator = staticmethod(locators['filters.new.name'])
+
+class NewFilterMenu(BaseFilterMenu):
+    _locator = staticmethod(events.appears(locators['filters.new']))
+    _selected_locator = staticmethod(locators['filters.new.selected'])
+
+    filter_name = NewFilterNameInput() 
 
 class Filters(BasePageObject):
-    new_filter = None
+    new_filter_menu = NewFilterMenu()
 
     def navigate(self):
         try:
@@ -77,4 +87,4 @@ class Filters(BasePageObject):
 
     def get_filter(self, filter_name):
         self.navigate()
-        return Filter(filter_name)
+        return FilterMenu(filter_name)
