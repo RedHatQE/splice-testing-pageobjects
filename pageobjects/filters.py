@@ -2,7 +2,8 @@ from selenium_wrapper import SE
 
 from  . import locators, pages
 
-from basepageelement import MenuPageElement, InputPageElement, ButtonPageElement, LinkPageElement, BasePageElement
+from basepageelement import InputPageElement, ButtonPageElement, LinkPageElement, BasePageElement
+from menupageelement import MenuPageElement
 from basepageobject import BasePageObject
 from selenium.common.exceptions import NoSuchElementException
 
