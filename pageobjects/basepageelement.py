@@ -1,7 +1,8 @@
 # Base Page Element
 
 class BasePageElement(object):
-    locator = staticmethod(lambda : None)
+    def __init__(self, locator=lambda: None):
+        self.locator = locator
 
     def __get__(self, obj, cls=None):
         return self.locator()

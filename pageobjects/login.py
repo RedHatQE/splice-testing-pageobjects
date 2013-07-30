@@ -6,22 +6,10 @@ from selenium.common.exceptions import NoSuchElementException
 
 from contextlib import contextmanager
 
-class UsernameElement(InputPageElement):
-    locator = staticmethod(locators["login.username"])
-
-class PasswordElement(InputPageElement):
-    locator = staticmethod(locators["login.password"])
-
-class SubmitButton(ButtonPageElement):
-    locator = staticmethod(locators["login.submit"])
-
-class LogoutLink(LinkPageElement):
-    locator = staticmethod(locators["login.logout"])
-
 class LoginPageObject(BasePageObject):
-    username = UsernameElement()
-    password = PasswordElement()
-    submit_button = SubmitButton()
+    username = InputPageElement(locators["login.username"])
+    password = InputPageElement(locators["login.password"])
+    submit_button = ButtonPageElement(locators["login.submit"])
 
     def __init__(self):
         try:
@@ -38,7 +26,8 @@ class LoginPageObject(BasePageObject):
         self.assertIn(locators['login.logout'], SE)
 
 class LogoutPageObject(BasePageObject):
-    logout_link = LogoutLink()
+    logout_link = LinkPageElement(locators["login.logout"])
+
     def __init__(self):
         try:
             self.assertEqual(pages['login.title'], SE.title)

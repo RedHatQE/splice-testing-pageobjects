@@ -11,38 +11,21 @@ import types, time, events
 
 REDHAT_DEFAULT_FILTER_NAME=u'Red Hat Default Report'
 
-class BaseFilterCloseLink(LinkPageElement):
-    locator = staticmethod(events.appears(locators['filters.filter.base.close_link']))
-
 class BaseFilterMenu(MenuPageElement):
     '''few common things between New Filter Menu and Filter Menu'''
     _selector = staticmethod(lambda x: x.click())
-    close_link = BaseFilterCloseLink()
+    close_link = LinkPageElement(events.appears(locators['filters.filter.base.close_link']))
 
     def close(self):
         self.close_link.click()
 
-class FilterRemoveLink(LinkPageElement):
-    #locator = staticmethod(events.appears(locators['filters.filter.remove_link']))
-    pass
-
-class RunButton(BasePageElement):
-    locator = staticmethod(events.appears(locators['filters.filter.run_button']))
-
-class EncryptExport(InputPageElement):
-    locator = staticmethod(events.appears(locators['filters.filter.encrypt_export']))
-
-class SkipJsonExport(InputPageElement):
-    locator = staticmethod(events.appears(locators['filters.filter.skip_json_export']))
-
-
 class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
 
-    run_button = RunButton()
-    remove_link = None
-    encrypt_export = EncryptExport()
-    skip_json_export = SkipJsonExport()
+    run_button = ButtonPageElement(events.appears(locators['filters.filter.run_button']))
+    remove_link = LinkPageElement()
+    encrypt_export = InputPageElement(events.appears(locators['filters.filter.encrypt_export']))
+    skip_json_export = InputPageElement(events.appears(locators['filters.filter.skip_json_export']))
 
     def __init__(self, name):
         self._name = name
@@ -59,14 +42,11 @@ class FilterMenu(BaseFilterMenu):
     def remove(self):
         pass
 
-class NewFilterNameInput(InputPageElement):
-    locator = staticmethod(locators['filters.new.name'])
-
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators['filters.new']))
     _selected_locator = staticmethod(locators['filters.new.selected'])
 
-    filter_name = NewFilterNameInput() 
+    filter_name = InputPageElement(events.appears(locators['filters.new.name']))
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()
