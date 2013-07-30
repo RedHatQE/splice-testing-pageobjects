@@ -1,4 +1,5 @@
-import logging, unittest, yaml, namespace, sys, os
+import logging, unittest, yaml, sys, os
+from pageobjects import namespace
 
 INVENTORY_FILE='./inventory.yml'
 log = logging.getLogger(__name__)
