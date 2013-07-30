@@ -7,13 +7,13 @@ class Namespace(dict):
         # a little magic
         self.__dict__ = self
 
-def load_ns(d):
+def load_ns(d, leaf_processor=lambda x: x):
     '''a recursive dict-to-Namespace loader'''
     if not isinstance(d, dict):
-        return d
+        return leaf_processor(d)
     ns = Namespace()
     for k, v in d.items():
-        ns[k] = load_ns(v)
+        ns[k] = load_ns(v, leaf_processor)
     return ns
 
 def locate_ns_item(ns, item):
