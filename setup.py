@@ -6,7 +6,9 @@ setup(name='pageobjects',
     author='dparalen',
     license='GPLv3+',
     install_requires=['selenium_wrapper'],
-    include_package_data = True,
+    package_data = {
+        'pageobjects': ['data/*.yml']
+    },
     classifiers=[
             'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
             'Programming Language :: Python',
