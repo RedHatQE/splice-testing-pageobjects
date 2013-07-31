@@ -21,16 +21,15 @@ Requires:	python-selenium-wrapper
 %build
 
 %install
-%{__python} setup.py install -O1 --root $RPM_BUILD_ROOT
+%{__python} setup.py install --single-version-externally-managed -O1 --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES 
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f INSTALLED_FILES
 %defattr(-,root,root,-)
 %doc LICENSE README.md
-%{python_sitelib}/*.egg-info
-%{python_sitelib}/pageobjects/*.py*
+
 
 %changelog
 * Tue Jul 30 2013 dparalen <vetrisko@gmail.com> 0.3-1
