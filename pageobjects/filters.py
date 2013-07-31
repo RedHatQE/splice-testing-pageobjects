@@ -42,11 +42,19 @@ class FilterMenu(BaseFilterMenu):
     def remove(self):
         pass
 
+
+class HoursMenu(MenuPageElement):
+    _locator = staticmethod(events.appears(locators.filters.hours_menu.locator))
+    _selected_locator = staticmethod(locators.filters.hours_menu.selected_locator)
+    _selector = staticmethod(lambda x: x.click())
+
+
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
     _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
 
     filter_name = InputPageElement(events.appears(locators.filters.new_menu.filter_name))
+    hours_menu = HoursMenu()
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()

@@ -87,6 +87,10 @@ class NewFilterTestCase(BaseFilterTestCase):
     def test_3_insert_name(self):
         # check name can be inserted
         self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
+
+    def test_4_select_hours_menu(self):
+        self.filters.new_filter_menu.hours_menu
+        self.assertTrue(self.filters.new_filter_menu.hours_menu.element.is_selected())
         
 
 
