@@ -34,5 +34,10 @@ class MenuPageElement(object):
     def __setattr__(self, attrname, value):
         self._select()
         self.__dict__[attrname] = value
+
+    @property
+    def element(self):
+        self._select()
+        return self._locator()
         
 
