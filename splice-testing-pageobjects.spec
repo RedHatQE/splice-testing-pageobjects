@@ -1,5 +1,5 @@
 Name:		splice-testing-pageobjects
-Version:	0.3
+Version:	0.4
 Release:	1%{?dist}
 Summary:	Splice WebUI page objects for test case automation
 
@@ -32,6 +32,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jul 31 2013 dparalen <vetrisko@gmail.com> 0.4-1
+- ignore vim .swo files, too (vetrisko@gmail.com)
+- fix: leave files spec up to setup.py --record (vetrisko@gmail.com)
+- fix: data specified explicitly (vetrisko@gmail.com)
+- made the locators data of the library (vetrisko@gmail.com)
+- move namespace module to pageobjects (vetrisko@gmail.com)
+
 * Tue Jul 30 2013 dparalen <vetrisko@gmail.com> 0.3-1
 - implemented a leaf processor (vetrisko@gmail.com)
 - refactoring the basepageelement to accept locator as an __init__ parameter
