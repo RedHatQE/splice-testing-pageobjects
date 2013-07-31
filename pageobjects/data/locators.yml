@@ -1,0 +1,22 @@
+login:
+  username: [find_element_by_name, username]
+  password: [find_element_by_name, password]
+  submit: [find_element_by_name, commit]
+  logout: [find_element_by_link_text, logout]
+  logout_notice: [find_element_by_xpath, "//li[text()='You have been logged out']"]
+
+filters:
+  page_title: [find_element_by_xpath, "//header/h2[@original-title='Report Filters']"]
+  base_menu:
+    close_link: [find_element_by_xpath, "//a[@class='close' and text() = 'Close']"]
+  menu:
+    locator: [find_element_by_xpath, "//div/div/span[normalize-space(text()) = '{0}']/../.."]
+    selected_locator: [find_element_by_xpath, "//div[@id='filter_name' and @title='{0}']"]
+    run_button: [find_element_by_xpath, "//a[contains(@href, 'reports')]/div[@id='submit_button' and normalize-space(text())='Run Report']/.."]
+    encrypt_export: [find_element_by_xpath, "//input[@id='splice_reports_export_encrypt_cbox' and @type='checkbox']"]
+    skip_json_export: [find_element_by_xpath, "//input[@id='splice_reports_include_json_cbox' and @type='checkbox']"]
+  new_menu:
+    locator: [find_element_by_xpath, "//a[@id='new' and @data-ajax_url='/sam/splice_reports/filters/new']"]
+    selected_locator: [find_element_by_xpath, "//h2[@title='New Filter']"]
+    filter_name: [find_element_by_xpath, "//input[@id='splice_reports_filter_name']"] 
+    

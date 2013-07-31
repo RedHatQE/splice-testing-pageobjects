@@ -1,0 +1,11 @@
+login:
+  url: signo
+  title: Signo
+
+logout:
+  url: signo
+  title: Signo
+
+filters:
+  url: sam/splice_reports/filters
+

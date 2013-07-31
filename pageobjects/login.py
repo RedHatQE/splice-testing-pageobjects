@@ -7,37 +7,37 @@ from selenium.common.exceptions import NoSuchElementException
 from contextlib import contextmanager
 
 class LoginPageObject(BasePageObject):
-    username = InputPageElement(locators["login.username"])
-    password = InputPageElement(locators["login.password"])
-    submit_button = ButtonPageElement(locators["login.submit"])
+    username = InputPageElement(locators.login.username)
+    password = InputPageElement(locators.login.password)
+    submit_button = ButtonPageElement(locators.login.submit)
 
     def __init__(self):
         try:
             # are we already there?
-            self.assertEqual(pages['login.title'], SE.title)
+            self.assertEqual(pages.login.title, SE.title)
         except AssertionError as e:
-            SE.get(SE.current_url + pages['login.url'])
-            self.assertEqual(pages['login.title'], SE.title)
+            SE.get(SE.current_url + pages.login.url)
+            self.assertEqual(pages.login.title, SE.title)
 
     def submit(self):
         # assumes successful log-in by the Sign "Out link" presence
         self.submit_button.click()
         SE.refresh()
-        self.assertIn(locators['login.logout'], SE)
+        self.assertIn(locators.login.logout, SE)
 
 class LogoutPageObject(BasePageObject):
-    logout_link = LinkPageElement(locators["login.logout"])
+    logout_link = LinkPageElement(locators.login.logout)
 
     def __init__(self):
         try:
-            self.assertEqual(pages['login.title'], SE.title)
+            self.assertEqual(pages.login.title, SE.title)
         except AssertionError as e:
-            SE.get(SE.current_url + pages['login.url'])
-            self.assertEqual(pages['login.title'], SE.title)
+            SE.get(SE.current_url + pages.login.url)
+            self.assertEqual(pages.login.title, SE.title)
 
     def submit(self):
         self.logout_link.click()
-        self.assertIn(locators["login.logout_notice"], SE)
+        self.assertIn(locators.login.logout_notice, SE)
 
 def login(username, password):
     '''Performs a log in'''
