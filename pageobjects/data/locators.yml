@@ -19,6 +19,7 @@ filters:
     locator: [find_element_by_xpath, "//a[@id='new' and @data-ajax_url='/sam/splice_reports/filters/new']"]
     selected_locator: [find_element_by_xpath, "//h2[@title='New Filter']"]
     filter_name: [find_element_by_xpath, "//input[@id='splice_reports_filter_name']"] 
+    filter_description: [find_element_by_xpath, "//input[@id='splice_reports_filter_description']"] 
   hours_menu:
     locator: [find_element_by_id, choose_hour]
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]

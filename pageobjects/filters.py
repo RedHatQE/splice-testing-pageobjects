@@ -48,12 +48,12 @@ class HoursMenu(MenuPageElement):
     _selected_locator = staticmethod(locators.filters.hours_menu.selected_locator)
     _selector = staticmethod(lambda x: x.click())
 
-
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
     _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
 
     filter_name = InputPageElement(events.appears(locators.filters.new_menu.filter_name))
+    filter_description = InputPageElement(events.appears(locators.filters.new_menu.filter_description))
     hours_menu = HoursMenu()
 
 class Filters(BasePageObject):
