@@ -33,7 +33,11 @@ class MenuPageElement(object):
 
     def __setattr__(self, attrname, value):
         self._select()
-        self.__dict__[attrname] = value
+        #super(MenuPageElement, self).
+        try:
+            self.__class__.__dict__[attrname].__set__(self.__class__, value)
+        except KeyError, AttributeError:
+            self.__dict__[attrname] = value
 
     @property
     def element(self):
