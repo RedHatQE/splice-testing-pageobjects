@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, unittest, re, time, os.path, logging, nose, selenium
+import sys, unittest, re, time, os.path, logging, nose, selenium, webuitestcase
 import tests as TESTS
 import pageobjects.filters as filters
 from pageobjects.login import login, logout
@@ -18,7 +18,7 @@ def setUpModule():
 def tearDownModule():
     pass
 
-class BaseFilterTestCase(unittest.TestCase):
+class BaseFilterTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
         # reset SE driver 
@@ -87,12 +87,12 @@ class NewFilterTestCase(BaseFilterTestCase):
     def test_3_insert_name(self):
         # check name can be inserted
         self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
-        self.assertEqual(self.filters.new_filter_menu.filter_name.get_attribute("value"), self.__class__.__name__ + "_filter")
+        self.assertElementValue(self.filters.new_filter_menu.filter_name, self.__class__.__name__ + "_filter")
 
     def test_4_insert_description(self):
         # check description can be inserted
         self.filters.new_filter_menu.filter_description = self.__class__.__name__ + "_description"
-        self.assertEqual(self.filters.new_filter_menu.filter_description.get_attribute("value"), self.__class__.__name__ + "_description")
+        self.assertElementValue(self.filters.new_filter_menu.filter_description, self.__class__.__name__ + "_description")
 
     def test_5_select_hours_menu(self):
         self.filters.new_filter_menu.hours_menu
@@ -100,7 +100,7 @@ class NewFilterTestCase(BaseFilterTestCase):
 
     def test_6_select_hours_field(self):
         self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
-        self.assertEqual(self.filters.new_filter_menu.hours_menu.hours_field.element.get_attribute('value'), '24')
+        self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '24')
     
 if __name__ == '__main__':
     nose.main()
