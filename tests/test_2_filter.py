@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, unittest, re, time, os.path, logging, nose, selenium, namespace
+import sys, unittest, re, time, os.path, logging, nose, selenium
 import tests as TESTS
 import pageobjects.filters as filters
 from pageobjects.login import login, logout

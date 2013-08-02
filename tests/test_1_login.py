@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import tests
-import sys, unittest, re, time, os.path, logging, nose, selenium, namespace
+import sys, unittest, re, time, os.path, logging, nose, selenium
 from pageobjects.login import LoginPageObject, LogoutPageObject, login_ctx
 from selenium_wrapper import SE
 
