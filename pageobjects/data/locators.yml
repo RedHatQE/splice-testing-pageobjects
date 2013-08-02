@@ -25,3 +25,8 @@ filters:
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]
     hours_field:
       locator: [find_element_by_xpath, "//select[@id='splice_reports_filter_hours']"]
+      option_blank: [find_element_by_xpath, "//option[@value='']"]
+      option_4: [find_element_by_xpath, "//option[@value='4']"]
+      option_8: [find_element_by_xpath, "//option[@value='8']"]
+      option_24: [find_element_by_xpath, "//option[@value='24']"]
+      option_48: [find_element_by_xpath, "//option[@value='48']"]

@@ -101,6 +101,10 @@ class NewFilterTestCase(BaseFilterTestCase):
     def test_6_select_hours_field(self):
         self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '24')
-    
+
+    def test_7_select_hours_field_option(self):
+        self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
+        self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '8')
+
 if __name__ == '__main__':
     nose.main()

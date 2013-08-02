@@ -47,6 +47,12 @@ class FilterMenu(BaseFilterMenu):
 class HoursField(ContainerPageElement):
     _locator = staticmethod(locators.filters.hours_menu.hours_field.locator)
 
+    option_blank = InputPageElement(locators.filters.hours_menu.hours_field.option_blank)
+    option_4 = InputPageElement(locators.filters.hours_menu.hours_field.option_4)
+    option_8 = InputPageElement(locators.filters.hours_menu.hours_field.option_8)
+    option_24 = InputPageElement(locators.filters.hours_menu.hours_field.option_24)
+    option_48 = InputPageElement(locators.filters.hours_menu.hours_field.option_48)
+
 
 class HoursMenu(MenuPageElement):
     _locator = staticmethod(events.appears(locators.filters.hours_menu.locator))
