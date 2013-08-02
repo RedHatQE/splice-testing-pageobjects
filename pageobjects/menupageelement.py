@@ -1,7 +1,8 @@
 from selenium.common.exceptions import NoSuchElementException
 from events import appears
+from containerpageelement import ContainerPageElement
 
-class MenuPageElement(object):
+class MenuPageElement(ContainerPageElement):
     '''element that requires selecting each time its attributes are accessed
     _locator: to find the menu instance on a page
     _selected_locator: to determine whether the menu instance has already been selected
@@ -38,10 +39,4 @@ class MenuPageElement(object):
             self.__class__.__dict__[attrname].__set__(self.__class__, value)
         except KeyError, AttributeError:
             self.__dict__[attrname] = value
-
-    @property
-    def element(self):
-        self._select()
-        return self._locator()
-        
 
