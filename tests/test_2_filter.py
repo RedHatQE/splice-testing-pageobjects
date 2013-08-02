@@ -99,7 +99,7 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.assertTrue(self.filters.new_filter_menu.hours_menu.element.is_selected())
 
     def test_6_select_hours_field(self):
-        self.filters.new_filter_menu.hours_menu.hours_field = '24'
+        self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
         self.assertEqual(self.filters.new_filter_menu.hours_menu.hours_field.element.get_attribute('value'), '24')
     
 if __name__ == '__main__':
