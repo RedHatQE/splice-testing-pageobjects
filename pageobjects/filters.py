@@ -61,6 +61,14 @@ class HoursMenu(MenuPageElement):
 
     hours_field = HoursField()
 
+class DateRangeMenu(MenuPageElement):
+    _locator = staticmethod(events.appears(locators.filters.date_range_menu.locator))
+    _selected_locator = staticmethod(locators.filters.date_range_menu.selected_locator)
+    _selector = staticmethod(lambda x: x.click())
+
+    start_date = InputPageElement(locators.filters.date_range_menu.start_date)
+    end_date = InputPageElement(locators.filters.date_range_menu.end_date)
+
 class StatusField(SelectPageElement):
     _locator = staticmethod(locators.filters.new_menu.status_field.locator)
     option_current = InputPageElement(locators.filters.new_menu.status_field.option_current)
@@ -76,9 +84,10 @@ class NewFilterMenu(BaseFilterMenu):
 
     filter_name = InputPageElement(events.appears(locators.filters.new_menu.filter_name))
     filter_description = InputPageElement(events.appears(locators.filters.new_menu.filter_description))
-    hours_menu = HoursMenu()
     status_field = StatusField()
     organizations_field = OrganizationsField()
+    hours_menu = HoursMenu()
+    date_range_menu = DateRangeMenu()
     inactive_checkbox = InputPageElement(locators.filters.new_menu.inactive_checkbox)
     save_filter = InputPageElement(locators.filters.new_menu.save_filter)
 

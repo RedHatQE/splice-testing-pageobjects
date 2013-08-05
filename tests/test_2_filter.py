@@ -145,5 +145,25 @@ class NewFilterTestCase(BaseFilterTestCase):
     def test_15_has_save_filter_button(self):
         self.filters.new_filter_menu.save_filter
 
+    def test_16_select_date_range_menu(self):
+        self.filters.new_filter_menu.date_range_menu
+        self.assertTrue(self.filters.new_filter_menu.date_range_menu.element.is_selected())
+
+    def test_17_set_start_date(self):
+        import datetime
+        # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
+        today = datetime.date.today()
+        today_str = "%02d/%02d/%d" % (today.month, today.day, today.year)
+        self.filters.new_filter_menu.date_range_menu.start_date = today_str
+        self.assertElementValue(self.filters.new_filter_menu.date_range_menu.start_date, today_str)
+
+    def test_18_set_end_date(self):
+        import datetime
+        # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
+        today = datetime.date.today()
+        today_str = "%02d/%02d/%d" % (today.month, today.day, today.year)
+        self.filters.new_filter_menu.date_range_menu.end_date = today_str
+        self.assertElementValue(self.filters.new_filter_menu.date_range_menu.end_date, today_str)
+
 if __name__ == '__main__':
     nose.main()
