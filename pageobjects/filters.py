@@ -6,7 +6,6 @@ from basepageelement import InputPageElement, ButtonPageElement, LinkPageElement
 from menupageelement import MenuPageElement
 from basepageobject import BasePageObject
 from selenium.common.exceptions import NoSuchElementException
-from containerpageelement import ContainerPageElement
 from selectpageelement import SelectPageElement
 
 import types, time, events
@@ -45,7 +44,7 @@ class FilterMenu(BaseFilterMenu):
         pass
 
 
-class HoursField(ContainerPageElement):
+class HoursField(SelectPageElement):
     _locator = staticmethod(locators.filters.hours_menu.hours_field.locator)
 
     option_blank = InputPageElement(locators.filters.hours_menu.hours_field.option_blank)
@@ -62,7 +61,7 @@ class HoursMenu(MenuPageElement):
 
     hours_field = HoursField()
 
-class StatusField(ContainerPageElement):
+class StatusField(SelectPageElement):
     _locator = staticmethod(locators.filters.new_menu.status_field.locator)
     option_current = InputPageElement(locators.filters.new_menu.status_field.option_current)
     option_invalid = InputPageElement(locators.filters.new_menu.status_field.option_invalid)
