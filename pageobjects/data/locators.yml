@@ -20,6 +20,11 @@ filters:
     selected_locator: [find_element_by_xpath, "//h2[@title='New Filter']"]
     filter_name: [find_element_by_xpath, "//input[@id='splice_reports_filter_name']"] 
     filter_description: [find_element_by_xpath, "//input[@id='splice_reports_filter_description']"] 
+    status_field:
+      locator: [find_element_by_id, splice_reports_filter_status]
+      option_current: [find_element_by_xpath, "//option[@value='Current']"]
+      option_invalid: [find_element_by_xpath, "//option[@value='Invalid']"]
+      option_insufficient: [find_element_by_xpath, "//option[@value='Insufficient']"]
   hours_menu:
     locator: [find_element_by_id, choose_hour]
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]

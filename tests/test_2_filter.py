@@ -106,5 +106,18 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '8')
 
+    def test_8_select_current_status_option(self):
+        self.filters.new_filter_menu.status_field.option_current.click()
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_current.is_selected())
+
+    def test_9_select_invalid_status_option(self):
+        self.filters.new_filter_menu.status_field.option_invalid.click()
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_invalid.is_selected())
+
+    def test_10_select_insufficient_status_option(self):
+        self.filters.new_filter_menu.status_field.option_insufficient.click()
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_insufficient.is_selected())
+
+
 if __name__ == '__main__':
     nose.main()

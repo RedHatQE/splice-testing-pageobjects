@@ -61,6 +61,12 @@ class HoursMenu(MenuPageElement):
 
     hours_field = HoursField()
 
+class StatusField(ContainerPageElement):
+    _locator = staticmethod(locators.filters.new_menu.status_field.locator)
+    option_current = InputPageElement(locators.filters.new_menu.status_field.option_current)
+    option_invalid = InputPageElement(locators.filters.new_menu.status_field.option_invalid)
+    option_insufficient = InputPageElement(locators.filters.new_menu.status_field.option_insufficient)
+
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
     _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
@@ -68,6 +74,7 @@ class NewFilterMenu(BaseFilterMenu):
     filter_name = InputPageElement(events.appears(locators.filters.new_menu.filter_name))
     filter_description = InputPageElement(events.appears(locators.filters.new_menu.filter_description))
     hours_menu = HoursMenu()
+    status_field = StatusField()
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()
