@@ -25,6 +25,8 @@ filters:
       option_current: [find_element_by_xpath, "//option[@value='Current']"]
       option_invalid: [find_element_by_xpath, "//option[@value='Invalid']"]
       option_insufficient: [find_element_by_xpath, "//option[@value='Insufficient']"]
+    organizations_field:
+      locator: [find_element_by_id, splice_reports_filter_organizations]
   hours_menu:
     locator: [find_element_by_id, choose_hour]
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]

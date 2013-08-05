@@ -118,6 +118,16 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.status_field.option_insufficient.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_insufficient.is_selected())
 
+    def test_11_select_default_organization_option(self):
+        self.filters.new_filter_menu.organizations_field = "ACME_Corporation"
+        option_element = self.filters.new_filter_menu.organizations_field.get_option_element_by_text("ACME_Corporation")
+        self.assertTrue(option_element.is_selected())
+
+    def test_12_select_ctx_default_organization_option(self):
+        from pageobjects.selectpageelement import select_ctx
+        with select_ctx(self.filters.new_filter_menu.organizations_field._locator, text_options=[('acme_corp', 'ACME_Corporation')]) as select_page_element:
+            select_page_element.acme_corp.click()
+            self.assertTrue(select_page_element.acme_corp.is_selected())
 
 if __name__ == '__main__':
     nose.main()
