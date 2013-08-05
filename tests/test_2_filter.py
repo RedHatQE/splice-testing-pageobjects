@@ -138,5 +138,9 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.assertElementValue(self.filters.new_filter_menu.organizations_field.element, selected_option_value)
         self.assertEqual("ACME_Corporation", self.filters.new_filter_menu.organizations_field.element.text)
 
+    def test_14_check_inactive_checkbox(self):
+        self.filters.new_filter_menu.inactive_checkbox.click()
+        self.assertTrue(self.filters.new_filter_menu.inactive_checkbox.is_selected())
+
 if __name__ == '__main__':
     nose.main()

@@ -79,6 +79,7 @@ class NewFilterMenu(BaseFilterMenu):
     hours_menu = HoursMenu()
     status_field = StatusField()
     organizations_field = OrganizationsField()
+    inactive_checkbox = InputPageElement(locators.filters.new_menu.inactive_checkbox)
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()
