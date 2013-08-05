@@ -129,5 +129,14 @@ class NewFilterTestCase(BaseFilterTestCase):
             select_page_element.acme_corp.click()
             self.assertTrue(select_page_element.acme_corp.is_selected())
 
+    def test_13_selenium_select_default_organization_option(self):
+        from selenium.webdriver.support.select import Select
+        select_organization = Select(self.filters.new_filter_menu.organizations_field.element)
+        select_organization.deselect_all()
+        select_organization.select_by_visible_text("ACME_Corporation")
+        selected_option_value = select_organization.first_selected_option.get_attribute('value')
+        self.assertElementValue(self.filters.new_filter_menu.organizations_field.element, selected_option_value)
+        self.assertEqual("ACME_Corporation", self.filters.new_filter_menu.organizations_field.element.text)
+
 if __name__ == '__main__':
     nose.main()
