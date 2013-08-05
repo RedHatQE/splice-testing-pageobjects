@@ -142,5 +142,8 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.inactive_checkbox.click()
         self.assertTrue(self.filters.new_filter_menu.inactive_checkbox.is_selected())
 
+    def test_15_has_save_filter_button(self):
+        self.filters.new_filter_menu.save_filter
+
 if __name__ == '__main__':
     nose.main()
