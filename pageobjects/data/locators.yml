@@ -27,7 +27,11 @@ filters:
       option_insufficient: [find_element_by_xpath, "//option[@value='Insufficient']"]
     organizations_field:
       locator: [find_element_by_id, splice_reports_filter_organizations]
-    inactive_checkbox: [find_element_by_xpath, "//input[@id='inactive']"]
+    lifecycle_field:
+      locator: [find_element_by_xpath, "//select[@id='splice_reports_filter_state']"]
+      option_active: [find_element_by_xpath, "//option[@value='Active']"]
+      option_inactive: [find_element_by_xpath, "//option[@value='Inactive']"]
+      option_deleted: [find_element_by_xpath, "//option[@value='Deleted']"]
     save_filter: [find_element_by_xpath, "//input[@id='save_filter']"]
   hours_menu:
     locator: [find_element_by_id, choose_hour]

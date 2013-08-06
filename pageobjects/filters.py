@@ -78,6 +78,13 @@ class StatusField(SelectPageElement):
 class OrganizationsField(SelectPageElement):
     _locator = staticmethod(locators.filters.new_menu.organizations_field.locator)
 
+class LifeCycleField(SelectPageElement):
+    _locator = staticmethod(locators.filters.new_menu.lifecycle_field.locator)
+
+    option_active = InputPageElement(locators.filters.new_menu.lifecycle_field.option_active)
+    option_inactive = InputPageElement(locators.filters.new_menu.lifecycle_field.option_inactive)
+    option_deleted = InputPageElement(locators.filters.new_menu.lifecycle_field.option_deleted)
+
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
     _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
@@ -88,7 +95,7 @@ class NewFilterMenu(BaseFilterMenu):
     organizations_field = OrganizationsField()
     hours_menu = HoursMenu()
     date_range_menu = DateRangeMenu()
-    inactive_checkbox = InputPageElement(locators.filters.new_menu.inactive_checkbox)
+    lifecycle_field = LifeCycleField()
     save_filter = InputPageElement(locators.filters.new_menu.save_filter)
 
 class Filters(BasePageObject):
