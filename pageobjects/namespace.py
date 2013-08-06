@@ -36,3 +36,15 @@ def locate_ns_item(ns, item):
     # no match
     raise KeyError('item not found: %s' % item)
 
+def setattr_ns(obj, ns, leaf_processor=lambda x: x):
+    '''kinda recursive setattr from a namespace to an arbitrary object'''
+
+    if not isinstance(ns, dict):
+        obj = leaf_processor(ns)
+
+    for k, v in ns.items():
+        try:
+            setattr_ns(getattr(obj, k), v, leaf_processor=leaf_processor)
+        except AttributeError:
+            setattr(obj, k, leaf_processor(v))
+
