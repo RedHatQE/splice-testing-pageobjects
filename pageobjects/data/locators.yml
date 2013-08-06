@@ -3,7 +3,6 @@ login:
   password: [find_element_by_name, password]
   submit: [find_element_by_name, commit]
   logout: [find_element_by_link_text, logout]
-  logout_notice: [find_element_by_xpath, "//li[text()='You have been logged out']"]
 
 filters:
   page_title: [find_element_by_xpath, "//header/h2[@original-title='Report Filters']"]
