@@ -76,41 +76,41 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
 
 class NewFilterTestCase(BaseFilterTestCase):
 
-    def test_1_select(self):
+    def test_01_select(self):
         # navigate to new filter menu works
         # FIXME: assert something here
         self.filters.new_filter_menu.filter_name
 
-    def test_2_close(self):
+    def test_02_close(self):
         self.filters.new_filter_menu.close()
 
-    def test_3_insert_name(self):
+    def test_03_insert_name(self):
         # check name can be inserted
         self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
         self.assertElementValue(self.filters.new_filter_menu.filter_name, self.__class__.__name__ + "_filter")
 
-    def test_4_insert_description(self):
+    def test_04_insert_description(self):
         # check description can be inserted
         self.filters.new_filter_menu.filter_description = self.__class__.__name__ + "_description"
         self.assertElementValue(self.filters.new_filter_menu.filter_description, self.__class__.__name__ + "_description")
 
-    def test_5_select_hours_menu(self):
+    def test_05_select_hours_menu(self):
         self.filters.new_filter_menu.hours_menu
         self.assertTrue(self.filters.new_filter_menu.hours_menu.element.is_selected())
 
-    def test_6_select_hours_field(self):
+    def test_06_select_hours_field(self):
         self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '24')
 
-    def test_7_select_hours_field_option(self):
+    def test_07_select_hours_field_option(self):
         self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '8')
 
-    def test_8_select_current_status_option(self):
+    def test_08_select_current_status_option(self):
         self.filters.new_filter_menu.status_field.option_current.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_current.is_selected())
 
-    def test_9_select_invalid_status_option(self):
+    def test_09_select_invalid_status_option(self):
         self.filters.new_filter_menu.status_field.option_invalid.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_invalid.is_selected())
 
