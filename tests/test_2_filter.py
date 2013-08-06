@@ -173,5 +173,45 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.date_range_menu.end_date = today_str
         self.assertElementValue(self.filters.new_filter_menu.date_range_menu.end_date, today_str)
 
+class NewFilterTestE2ECase(BaseFilterTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(NewFilterTestE2ECase, cls).setUpClass()
+        import pageobjects.namespace
+        # details to be filled in the new filter menu
+        cls.filter_details = pageobjects.namespace.load_ns({
+            'filter_name': cls.__name__ + "_test",
+            'filter_description': cls.__name__ + "_description",
+            'hours_menu': {
+                'hours_field': "24"
+            },
+            'status_field': "Current",
+            'organizations_field': "ACME_Corporation",
+            'lifecycle_field': "Active"
+        })
+
+        SE.get(KATELLO.url)
+        cls.filters = filters.Filters()
+        # apply the filter details to the new_filter_menu
+        pageobjects.namespace.setattr_ns(cls.filters.new_filter_menu, cls.filter_details)
+        # submit the new filter
+        cls.filters.new_filter_menu.submit()
+        
+    def setUp(self):
+        self.the_filter = self.filters.get_filter(self.filter_details.filter_name) 
+        self.verificationErrors = []
+
+    @classmethod
+    def tearDownClass(cls):
+        SE.get(KATELLO.url)
+        the_filter = cls.filters.get_filter(cls.filter_details.filter_name)
+        the_filter.remove()
+        super(NewFilterTestE2ECase, cls).tearDownClass()
+        
+    def test_01(self):
+        pass
+
+        
+        
 if __name__ == '__main__':
     nose.main()

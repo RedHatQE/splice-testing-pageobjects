@@ -20,11 +20,19 @@ class BaseFilterMenu(MenuPageElement):
     def close(self):
         self.close_link.click()
 
+class RemoveFilter(MenuPageElement):
+    _locator = staticmethod(events.appears(locators.filters.menu.remove_filter.locator))
+    _selected_locator = staticmethod(locators.filters.menu.remove_filter.selected_locator)
+    _selector = staticmethod(lambda x: x.click())
+
+    button_yes = ButtonPageElement(locators.filters.menu.remove_filter.button_yes)
+    button_no = ButtonPageElement(locators.filters.menu.remove_filter.button_no)
+
 class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
 
     run_button = ButtonPageElement(events.appears(locators.filters.menu.run_button))
-    remove_link = LinkPageElement()
+    remove_filter = RemoveFilter()
     encrypt_export = InputPageElement(events.appears(locators.filters.menu.encrypt_export))
     skip_json_export = InputPageElement(events.appears(locators.filters.menu.skip_json_export))
 
@@ -40,9 +48,10 @@ class FilterMenu(BaseFilterMenu):
     def export_report(self):
         pass
 
-    def remove(self):
-        pass
-
+    @staticmethod
+    def remove():
+        FilterMenu.remove_filter.button_yes.click()
+        
 
 class HoursField(SelectPageElement):
     _locator = staticmethod(locators.filters.hours_menu.hours_field.locator)
@@ -97,6 +106,10 @@ class NewFilterMenu(BaseFilterMenu):
     date_range_menu = DateRangeMenu()
     lifecycle_field = LifeCycleField()
     save_filter = InputPageElement(locators.filters.new_menu.save_filter)
+
+    @staticmethod
+    def submit():
+        NewFilterMenu.save_filter.click()
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()
