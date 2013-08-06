@@ -37,7 +37,9 @@ class LogoutPageObject(BasePageObject):
 
     def submit(self):
         self.logout_link.click()
-        self.assertIn(locators.login.logout_notice, SE)
+        # assert the logout link isn't there anymore
+        with self.assertRaises(NoSuchElementException):
+            self.logout_link
 
 def login(username, password):
     '''Performs a log in'''
