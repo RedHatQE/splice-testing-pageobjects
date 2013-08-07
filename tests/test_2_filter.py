@@ -211,6 +211,27 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
         
     def test_01_filter_name(self):
         self.assertEqual(self.the_filter.filter_name.text, self.filter_details.filter_name)
+        
+    def test_02_description_name(self):
+        self.assertEqual(self.the_filter.filter_description.text, self.filter_details.filter_description)
+        
+    def test_03_hours_field(self):
+        self.assertEqual(self.the_filter.hours_field.text, self.filter_details.hours_menu.hours_field)
+        
+    def test_04_status_field(self):
+        self.assertEqual(self.the_filter.status_field.text, self.filter_details.status_field)
+        
+    def test_05_organizations_field(self):
+        self.assertEqual(self.the_filter.organizations_field.text, self.filter_details.organizations_field)
+        
+    def test_06_lifecycle_field(self):
+        self.assertEqual(self.the_filter.lifecycle_field.text, self.filter_details.lifecycle_field)
+        
+    def test_07_start_date(self):
+        self.assertEqual(self.the_filter.start_date.text, "None")
+        
+    def test_08_end_date(self):
+        self.assertEqual(self.the_filter.end_date.text, "None")
 
 if __name__ == '__main__':
     nose.main()

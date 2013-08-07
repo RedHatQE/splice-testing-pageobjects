@@ -15,6 +15,13 @@ filters:
     filter_name_update:
       locator: [find_element_by_xpath, "//div[@id='filter_name' and @title='Click to edit']"]
       selected_locator: [find_element_by_xpath, "//div[@id='filter_name']/form"]
+    filter_description: [find_element_by_xpath, "//div[@id='filter_description' and @title='Click to edit']"]
+    hours_field: [find_element_by_xpath, "//div[@id='num_hours' and @title='Click to edit']"]
+    status_field: [find_element_by_xpath, "//div[@id='filter_status' and @name='filter[status]' and @title='Click to edit']"]
+    organizations_field: [find_element_by_xpath, "//div[@class='edit_multiselect editable grid_10 la' and @name='filter[organizations]' and @title='Click to edit']"]
+    lifecycle_field: [find_element_by_xpath, "//div[@id='filter_status' and @name='filter[state]' and @title='Click to edit']"]
+    start_date: [find_element_by_xpath, "//div[@id='filter_start_date_start_date' and @title='Click to edit']"]
+    end_date: [find_element_by_xpath, "//div[@id='filter_end_end_date' and @title='Click to edit']"]
     run_button: [find_element_by_xpath, "//a[contains(@href, 'reports')]/div[@id='submit_button' and normalize-space(text())='Run Report']/.."]
     encrypt_export: [find_element_by_xpath, "//input[@id='splice_reports_export_encrypt_cbox' and @type='checkbox']"]
     skip_json_export: [find_element_by_xpath, "//input[@id='splice_reports_include_json_cbox' and @type='checkbox']"]
