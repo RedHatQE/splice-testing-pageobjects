@@ -41,9 +41,9 @@ class FilterMenu(BaseFilterMenu):
         # instance-level locator; monkeypatching for each filter
         self._locator = events.appears(types.MethodType(lambda self: locators.filters.menu.locator(self._name), self))
         self._selected_locator = types.MethodType(lambda self: locators.filters.menu.selected_locator(self._name), self)
-
-    def run_report(self):
-        self.run_button.click()
+    @staticmethod
+    def run_report():
+        FilterMenu.run_button.click()
 
     def export_report(self):
         pass
