@@ -30,7 +30,7 @@ class RemoveFilter(MenuPageElement):
 
 class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
-
+    filter_name = BasePageElement(locators.filters.menu.filter_name)
     run_button = ButtonPageElement(events.appears(locators.filters.menu.run_button))
     remove_filter = RemoveFilter()
     encrypt_export = InputPageElement(events.appears(locators.filters.menu.encrypt_export))

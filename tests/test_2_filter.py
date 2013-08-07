@@ -198,6 +198,7 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
         cls.filters.new_filter_menu.submit()
         
     def setUp(self):
+        super(NewFilterTestE2ECase, self).setUp()
         self.the_filter = self.filters.get_filter(self.filter_details.filter_name) 
         self.verificationErrors = []
 
@@ -208,10 +209,8 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
         the_filter.remove()
         super(NewFilterTestE2ECase, cls).tearDownClass()
         
-    def test_01(self):
-        pass
+    def test_01_filter_name(self):
+        self.assertEqual(self.the_filter.filter_name.text, self.filter_details.filter_name)
 
-        
-        
 if __name__ == '__main__':
     nose.main()
