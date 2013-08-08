@@ -10,7 +10,7 @@ filters:
     close_link: [find_element_by_xpath, "//a[@class='close' and text() = 'Close']"]
   menu:
     locator: [find_element_by_xpath, "//div/div/span[normalize-space(text()) = '{0}']/../.."]
-    selected_locator: [find_element_by_xpath, "//div[@id='filter_name' and @title='{0}']"]
+    selected_locator: [find_element_by_xpath, "//div/h2[@title='{0}']"]
     filter_name: [find_element_by_xpath, "//div[@id='filter_name' and @title='Click to edit']"]
     filter_name_update:
       locator: [find_element_by_xpath, "//div[@id='filter_name' and @title='Click to edit']"]
