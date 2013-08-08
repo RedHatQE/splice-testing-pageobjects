@@ -30,14 +30,14 @@ class RemoveFilter(MenuPageElement):
 
 class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
-    filter_name = BasePageElement(locators.filters.menu.filter_name)
-    filter_description = BasePageElement(locators.filters.menu.filter_description)
-    hours_field = BasePageElement(locators.filters.menu.hours_field)
-    status_field = BasePageElement(locators.filters.menu.status_field)
-    organizations_field = BasePageElement(locators.filters.menu.organizations_field)
-    lifecycle_field = BasePageElement(locators.filters.menu.lifecycle_field)
-    start_date = BasePageElement(locators.filters.menu.start_date)
-    end_date = BasePageElement(locators.filters.menu.end_date)
+    filter_name = BasePageElement(events.appears(locators.filters.menu.filter_name))
+    filter_description = BasePageElement(events.appears(locators.filters.menu.filter_description))
+    hours_field = BasePageElement(events.appears(locators.filters.menu.hours_field))
+    status_field = BasePageElement(events.appears(locators.filters.menu.status_field))
+    organizations_field = BasePageElement(events.appears(locators.filters.menu.organizations_field))
+    lifecycle_field = BasePageElement(events.appears(locators.filters.menu.lifecycle_field))
+    start_date = BasePageElement(events.appears(locators.filters.menu.start_date))
+    end_date = BasePageElement(events.appears(locators.filters.menu.end_date))
     run_button = ButtonPageElement(events.appears(locators.filters.menu.run_button))
     remove_filter = RemoveFilter()
     encrypt_export = InputPageElement(events.appears(locators.filters.menu.encrypt_export))
