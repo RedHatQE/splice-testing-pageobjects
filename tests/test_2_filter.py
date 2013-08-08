@@ -4,6 +4,7 @@ import tests as TESTS
 import pageobjects.filters as filters
 from pageobjects.login import login, logout
 from selenium_wrapper import SE
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 KATELLO = TESTS.ROLES.KATELLO
 
@@ -70,6 +71,7 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
 
     def test_5_run(self):
         self.report_filter.run_report()
+
 
 class NewFilterTestCase(BaseFilterTestCase):
 
@@ -227,6 +229,18 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
         
     def test_08_end_date(self):
         self.assertEqual(self.the_filter.end_date.text, "None")
+
+class NewFilterTestCaseVerification(BaseFilterTestCase):
+
+    def tearDown(self):
+        # make sure the menu is closed after each test to deselect items selected by the test
+        self.filters.new_filter_menu.validation_error_message.close()
+        self.filters.new_filter_menu.close()
+
+    def test_01_no_filter_name(self):
+        self.filters.new_filter_menu.filter_name = ""
+        self.filters.new_filter_menu.submit()
+        self.filters.new_filter_menu.validation_error_message.message_blank_filter_name
 
 if __name__ == '__main__':
     nose.main()

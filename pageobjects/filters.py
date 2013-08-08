@@ -7,6 +7,7 @@ from menupageelement import MenuPageElement
 from basepageobject import BasePageObject
 from selenium.common.exceptions import NoSuchElementException
 from selectpageelement import SelectPageElement
+from containerpageelement import ContainerPageElement
 
 import types, time, events
 
@@ -101,6 +102,16 @@ class LifeCycleField(SelectPageElement):
     option_inactive = InputPageElement(locators.filters.new_menu.lifecycle_field.option_inactive)
     option_deleted = InputPageElement(locators.filters.new_menu.lifecycle_field.option_deleted)
 
+class ValidationErrorMessage(ContainerPageElement):
+    _locator = staticmethod(events.appears(locators.filters.new_menu.validation_error_message.locator))
+    close_link = LinkPageElement(locators.filters.new_menu.validation_error_message.close_link)
+
+    message_blank_filter_name = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_blank_filter_name))
+
+    @staticmethod
+    def close():
+        ValidationErrorMessage.close_link.click()
+
 class NewFilterMenu(BaseFilterMenu):
     _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
     _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
@@ -113,6 +124,7 @@ class NewFilterMenu(BaseFilterMenu):
     date_range_menu = DateRangeMenu()
     lifecycle_field = LifeCycleField()
     save_filter = InputPageElement(locators.filters.new_menu.save_filter)
+    validation_error_message = ValidationErrorMessage()
 
     @staticmethod
     def submit():

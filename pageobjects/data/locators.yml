@@ -48,6 +48,13 @@ filters:
       option_inactive: [find_element_by_xpath, "//option[@value='Inactive']"]
       option_deleted: [find_element_by_xpath, "//option[@value='Deleted']"]
     save_filter: [find_element_by_xpath, "//input[@id='save_filter']"]
+    validation_error_message:
+      locator: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//span[text()='Validation Failed:']"]
+      close_link: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//a[@class='jnotify-close']"]
+      message_blank_filter_name:
+      - find_element_by_xpath
+      - |
+        //div[@class='jnotify-notification jnotify-notification-error']//li[contains(text(), 'Name')]
   hours_menu:
     locator: [find_element_by_id, choose_hour]
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]
@@ -63,3 +70,4 @@ filters:
     selected_locator: [find_element_by_xpath, "//div[@id='daterange' and @style='display: block;']"]
     start_date: [find_element_by_id, splice_reports_filter_start_date]
     end_date: [find_element_by_id, splice_reports_filter_end_date]
+  
