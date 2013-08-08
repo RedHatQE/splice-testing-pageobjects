@@ -25,10 +25,10 @@ class BaseFilterTestCase(webuitestcase.WebuiTestCase):
         SE.reset(url=KATELLO.url)
         SE.maximize_window()
         login(KATELLO.username, KATELLO.password)
+        SE.get(KATELLO.url)
+        cls.filters = filters.Filters()
 
     def setUp(self):
-        SE.get(KATELLO.url)
-        self.filters = filters.Filters()
         self.verificationErrors = []
 
     def tearDown(self):
@@ -41,95 +41,93 @@ class BaseFilterTestCase(webuitestcase.WebuiTestCase):
 
 
 class DefaultRhelFilterTestCase(BaseFilterTestCase):
-    def setUp(self):
-        # navigate to the default filter
-        super(DefaultRhelFilterTestCase, self).setUp()
-        self.report_filter = self.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
+    @classmethod
+    def setUpClass(cls):
+        super(DefaultRhelFilterTestCase, cls).setUpClass()
+        cls.report_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
 
-    def test_1_open_reports_page(self):
-        # TODO: assert something here ;)
-        pass
-
-    def test_2_select(self):
+    def test_1_select(self):
         self.report_filter
 
-    def test_3_select_and_close(self):
+    def test_2_select_and_close(self):
         self.report_filter.close()
 
-    def test_4_run(self):
-        self.report_filter.run_report()
         
-    def test_5_enable_encrypt_export(self):
+    def test_3_enable_encrypt_export(self):
+        #self.report_filter.encrypt_export
         try:
             self.assertTrue(self.report_filter.encrypt_export.is_selected())
         except AssertionError:
             self.report_filter.encrypt_export.click()
             self.assertTrue(self.report_filter.encrypt_export.is_selected())
 
-    def test_6_enable_skipping_json_export(self):
+    def test_4_enable_skipping_json_export(self):
         try:
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
         except AssertionError:
             self.report_filter.skip_json_export.click()
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
 
+    def test_5_run(self):
+        self.report_filter.run_report()
 
 class NewFilterTestCase(BaseFilterTestCase):
+
+    def tearDown(self):
+        # make sure the menu is closed after each test to deselect items selected by the test
+        self.filters.new_filter_menu.close()
 
     def test_01_select(self):
         # navigate to new filter menu works
         # FIXME: assert something here
         self.filters.new_filter_menu.filter_name
 
-    def test_02_close(self):
-        self.filters.new_filter_menu.close()
-
-    def test_03_insert_name(self):
+    def test_02_insert_name(self):
         # check name can be inserted
         self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
         self.assertElementValue(self.filters.new_filter_menu.filter_name, self.__class__.__name__ + "_filter")
 
-    def test_04_insert_description(self):
+    def test_03_insert_description(self):
         # check description can be inserted
         self.filters.new_filter_menu.filter_description = self.__class__.__name__ + "_description"
         self.assertElementValue(self.filters.new_filter_menu.filter_description, self.__class__.__name__ + "_description")
 
-    def test_05_select_hours_menu(self):
+    def test_04_select_hours_menu(self):
         self.filters.new_filter_menu.hours_menu
         self.assertTrue(self.filters.new_filter_menu.hours_menu.element.is_selected())
 
-    def test_06_select_hours_field(self):
+    def test_05_select_hours_field(self):
         self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '24')
 
-    def test_07_select_hours_field_option(self):
+    def test_06_select_hours_field_option(self):
         self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
         self.assertElementValue(self.filters.new_filter_menu.hours_menu.hours_field.element, '8')
 
-    def test_08_select_current_status_option(self):
+    def test_07_select_current_status_option(self):
         self.filters.new_filter_menu.status_field.option_current.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_current.is_selected())
 
-    def test_09_select_invalid_status_option(self):
+    def test_08_select_invalid_status_option(self):
         self.filters.new_filter_menu.status_field.option_invalid.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_invalid.is_selected())
 
-    def test_10_select_insufficient_status_option(self):
+    def test_09_select_insufficient_status_option(self):
         self.filters.new_filter_menu.status_field.option_insufficient.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_insufficient.is_selected())
 
-    def test_11_select_default_organization_option(self):
+    def test_10_select_default_organization_option(self):
         self.filters.new_filter_menu.organizations_field = "ACME_Corporation"
         option_element = self.filters.new_filter_menu.organizations_field.get_option_element_by_text("ACME_Corporation")
         self.assertTrue(option_element.is_selected())
 
-    def test_12_select_ctx_default_organization_option(self):
+    def test_11_select_ctx_default_organization_option(self):
         from pageobjects.selectpageelement import select_ctx
         with select_ctx(self.filters.new_filter_menu.organizations_field._locator, text_options=[('acme_corp', 'ACME_Corporation')]) as select_page_element:
             select_page_element.acme_corp.click()
             self.assertTrue(select_page_element.acme_corp.is_selected())
 
-    def test_13_selenium_select_default_organization_option(self):
+    def test_12_selenium_select_default_organization_option(self):
         from selenium.webdriver.support.select import Select
         select_organization = Select(self.filters.new_filter_menu.organizations_field.element)
         select_organization.deselect_all()
@@ -138,26 +136,26 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.assertElementValue(self.filters.new_filter_menu.organizations_field.element, selected_option_value)
         self.assertEqual("ACME_Corporation", self.filters.new_filter_menu.organizations_field.element.text)
 
-    def test_14_select_active_lifecycle_option(self):
+    def test_13_select_active_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_active.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_active.is_selected())
 
-    def test_15_select_inactive_lifecycle_option(self):
+    def test_14_select_inactive_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_inactive.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_inactive.is_selected())
 
-    def test_16_select_deleted_lifecycle_option(self):
+    def test_15_select_deleted_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_deleted.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_deleted.is_selected())
 
-    def test_17_has_save_filter_button(self):
+    def test_16_has_save_filter_button(self):
         self.filters.new_filter_menu.save_filter
 
-    def test_18_select_date_range_menu(self):
+    def test_17_select_date_range_menu(self):
         self.filters.new_filter_menu.date_range_menu
         self.assertTrue(self.filters.new_filter_menu.date_range_menu.element.is_selected())
 
-    def test_19_set_start_date(self):
+    def test_18_set_start_date(self):
         import datetime
         # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
         today = datetime.date.today()
@@ -165,7 +163,7 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.date_range_menu.start_date = today_str
         self.assertElementValue(self.filters.new_filter_menu.date_range_menu.start_date, today_str)
 
-    def test_20_set_end_date(self):
+    def test_19_set_end_date(self):
         import datetime
         # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
         today = datetime.date.today()
@@ -190,23 +188,20 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
             'lifecycle_field': "Active"
         })
 
-        SE.get(KATELLO.url)
-        cls.filters = filters.Filters()
         # apply the filter details to the new_filter_menu
         pageobjects.namespace.setattr_ns(cls.filters.new_filter_menu, cls.filter_details)
         # submit the new filter
         cls.filters.new_filter_menu.submit()
-        
-    def setUp(self):
-        super(NewFilterTestE2ECase, self).setUp()
-        self.the_filter = self.filters.get_filter(self.filter_details.filter_name) 
-        self.verificationErrors = []
+        cls.the_filter = cls.filters.get_filter(cls.filter_details.filter_name)
+        # kinda "refresh" here
+        cls.filters.navigate()
 
     @classmethod
     def tearDownClass(cls):
+        # have to remove the filter through the cls.filters attribute instead of cls.the_filter
+        # to access the filters/reports page before accessing the_filter
         SE.get(KATELLO.url)
-        the_filter = cls.filters.get_filter(cls.filter_details.filter_name)
-        the_filter.remove()
+        cls.filters.get_filter(cls.filter_details.filter_name).remove()
         super(NewFilterTestE2ECase, cls).tearDownClass()
         
     def test_01_filter_name(self):
