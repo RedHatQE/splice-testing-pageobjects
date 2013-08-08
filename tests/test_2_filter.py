@@ -19,6 +19,7 @@ def setUpModule():
 def tearDownModule():
     pass
 
+
 class BaseFilterTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
@@ -47,14 +48,14 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
         super(DefaultRhelFilterTestCase, cls).setUpClass()
         cls.report_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
 
-    def test_1_select(self):
+    def test_01_select(self):
         self.report_filter
 
-    def test_2_select_and_close(self):
+    def test_02_select_and_close(self):
         self.report_filter.close()
 
         
-    def test_3_enable_encrypt_export(self):
+    def test_03_enable_encrypt_export(self):
         #self.report_filter.encrypt_export
         try:
             self.assertTrue(self.report_filter.encrypt_export.is_selected())
@@ -62,14 +63,14 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
             self.report_filter.encrypt_export.click()
             self.assertTrue(self.report_filter.encrypt_export.is_selected())
 
-    def test_4_enable_skipping_json_export(self):
+    def test_04_enable_skipping_json_export(self):
         try:
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
         except AssertionError:
             self.report_filter.skip_json_export.click()
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
 
-    def test_5_run(self):
+    def test_05_run(self):
         self.report_filter.run_report()
 
 
@@ -173,6 +174,7 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.date_range_menu.end_date = today_str
         self.assertElementValue(self.filters.new_filter_menu.date_range_menu.end_date, today_str)
 
+
 class NewFilterTestE2ECase(BaseFilterTestCase):
     @classmethod
     def setUpClass(cls):
@@ -230,6 +232,7 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
     def test_08_end_date(self):
         self.assertEqual(self.the_filter.end_date.text, "None")
 
+
 class NewFilterTestCaseVerification(BaseFilterTestCase):
 
     def tearDown(self):
@@ -237,10 +240,12 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         self.filters.new_filter_menu.validation_error_message.close()
         self.filters.new_filter_menu.close()
 
-    def test_01_no_filter_name(self):
-        self.filters.new_filter_menu.filter_name = ""
+    def test_01_empty_mandatory_fields(self):
         self.filters.new_filter_menu.submit()
-        self.filters.new_filter_menu.validation_error_message.message_blank_filter_name
+        self.filters.new_filter_menu.validation_error_message.message_filter_name
+        self.filters.new_filter_menu.validation_error_message.message_status_field
+        self.filters.new_filter_menu.validation_error_message.message_lifecycle_field
+        self.filters.new_filter_menu.validation_error_message.message_hour_date_criteria
 
 if __name__ == '__main__':
     nose.main()

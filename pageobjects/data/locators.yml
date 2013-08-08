@@ -51,10 +51,10 @@ filters:
     validation_error_message:
       locator: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//span[text()='Validation Failed:']"]
       close_link: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//a[@class='jnotify-close']"]
-      message_blank_filter_name:
-      - find_element_by_xpath
-      - |
-        //div[@class='jnotify-notification jnotify-notification-error']//li[contains(text(), 'Name')]
+      message_filter_name: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//li[text()='Name must contain at least 1 character']"]
+      message_status_field: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//li[text()='Please select at least one Subscription Status.']"]
+      message_lifecycle_field: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//li[text()='Please select at least one Lifecycle State.']"]
+      message_hour_date_criteria: [find_element_by_xpath, "//div[@class='jnotify-notification jnotify-notification-error']//li[text()='Please choose either a date range or number of hours']"]
   hours_menu:
     locator: [find_element_by_id, choose_hour]
     selected_locator: [find_element_by_xpath, "//div[@id='hour' and @style='display: block;']"]

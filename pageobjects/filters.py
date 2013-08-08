@@ -106,7 +106,10 @@ class ValidationErrorMessage(ContainerPageElement):
     _locator = staticmethod(events.appears(locators.filters.new_menu.validation_error_message.locator))
     close_link = LinkPageElement(locators.filters.new_menu.validation_error_message.close_link)
 
-    message_blank_filter_name = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_blank_filter_name))
+    message_filter_name = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_filter_name))
+    message_status_field = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_status_field))
+    message_lifecycle_field = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_lifecycle_field))
+    message_hour_date_criteria = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_hour_date_criteria))
 
     @staticmethod
     def close():
