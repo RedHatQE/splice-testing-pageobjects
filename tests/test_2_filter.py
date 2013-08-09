@@ -118,19 +118,27 @@ class NewFilterTestCase(BaseFilterTestCase):
     def test_09_select_insufficient_status_option(self):
         self.filters.new_filter_menu.status_field.option_insufficient.click()
         self.assertTrue(self.filters.new_filter_menu.status_field.option_insufficient.is_selected())
+        
+    def test_10_select_all_status_options(self):
+        self.filters.new_filter_menu.status_field.option_current.click()
+        self.filters.new_filter_menu.status_field.option_invalid.click()
+        self.filters.new_filter_menu.status_field.option_insufficient.click()
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_current.is_selected())
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_invalid.is_selected())
+        self.assertTrue(self.filters.new_filter_menu.status_field.option_insufficient.is_selected())
 
-    def test_10_select_default_organization_option(self):
+    def test_11_select_default_organization_option(self):
         self.filters.new_filter_menu.organizations_field = "ACME_Corporation"
         option_element = self.filters.new_filter_menu.organizations_field.get_option_element_by_text("ACME_Corporation")
         self.assertTrue(option_element.is_selected())
 
-    def test_11_select_ctx_default_organization_option(self):
+    def test_12_select_ctx_default_organization_option(self):
         from pageobjects.selectpageelement import select_ctx
         with select_ctx(self.filters.new_filter_menu.organizations_field._locator, text_options=[('acme_corp', 'ACME_Corporation')]) as select_page_element:
             select_page_element.acme_corp.click()
             self.assertTrue(select_page_element.acme_corp.is_selected())
 
-    def test_12_selenium_select_default_organization_option(self):
+    def test_13_selenium_select_default_organization_option(self):
         from selenium.webdriver.support.select import Select
         select_organization = Select(self.filters.new_filter_menu.organizations_field.element)
         select_organization.deselect_all()
@@ -139,26 +147,34 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.assertElementValue(self.filters.new_filter_menu.organizations_field.element, selected_option_value)
         self.assertEqual("ACME_Corporation", self.filters.new_filter_menu.organizations_field.element.text)
 
-    def test_13_select_active_lifecycle_option(self):
+    def test_14_select_active_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_active.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_active.is_selected())
 
-    def test_14_select_inactive_lifecycle_option(self):
+    def test_15_select_inactive_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_inactive.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_inactive.is_selected())
 
-    def test_15_select_deleted_lifecycle_option(self):
+    def test_16_select_deleted_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_deleted.click()
         self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_deleted.is_selected())
+        
+    def test_17_select_all_lifecycle_options(self):
+        self.filters.new_filter_menu.lifecycle_field.option_active.click()
+        self.filters.new_filter_menu.lifecycle_field.option_inactive.click()
+        self.filters.new_filter_menu.lifecycle_field.option_deleted.click()
+        self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_active.is_selected())
+        self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_inactive.is_selected())
+        self.assertTrue(self.filters.new_filter_menu.lifecycle_field.option_deleted.is_selected())
 
-    def test_16_has_save_filter_button(self):
+    def test_18_has_save_filter_button(self):
         self.filters.new_filter_menu.save_filter
 
-    def test_17_select_date_range_menu(self):
+    def test_19_select_date_range_menu(self):
         self.filters.new_filter_menu.date_range_menu
         self.assertTrue(self.filters.new_filter_menu.date_range_menu.element.is_selected())
 
-    def test_18_set_start_date(self):
+    def test_20_set_start_date(self):
         import datetime
         # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
         today = datetime.date.today()
@@ -166,7 +182,7 @@ class NewFilterTestCase(BaseFilterTestCase):
         self.filters.new_filter_menu.date_range_menu.start_date = today_str
         self.assertElementValue(self.filters.new_filter_menu.date_range_menu.start_date, today_str)
 
-    def test_19_set_end_date(self):
+    def test_21_set_end_date(self):
         import datetime
         # FIXME the WebUI might have a bug here: it doesn't accept iso formated date
         today = datetime.date.today()
@@ -246,6 +262,41 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         self.filters.new_filter_menu.validation_error_message.message_status_field
         self.filters.new_filter_menu.validation_error_message.message_lifecycle_field
         self.filters.new_filter_menu.validation_error_message.message_hour_date_criteria
+        
+    def test_02_no_empty_filter_name_field(self):
+        self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
+        self.filters.new_filter_menu.submit()
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_filter_name
+        
+    def test_03_no_empty_status_field(self):
+        self.filters.new_filter_menu.status_field.option_current.click()
+        self.filters.new_filter_menu.submit()
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_status_field
+
+    def test_04_mo_empty_lifecycle_field(self):
+        self.filters.new_filter_menu.lifecycle_field.option_active.click()
+        self.filters.new_filter_menu.submit()
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_lifecycle_field
+        
+    def test_05_no_empty_hours_field(self):
+        self.filters.new_filter_menu.hours_menu.hours_field.element = '24'
+        self.filters.new_filter_menu.submit()
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_hour_date_criteria
+            
+    def test_06_empty_only_status_and_lifecycle_field(self):
+        self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
+        self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
+        self.filters.new_filter_menu.submit()
+        self.filters.new_filter_menu.validation_error_message.message_status_field
+        self.filters.new_filter_menu.validation_error_message.message_lifecycle_field
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_filter_name
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_hour_date_criteria
 
 if __name__ == '__main__':
     nose.main()
