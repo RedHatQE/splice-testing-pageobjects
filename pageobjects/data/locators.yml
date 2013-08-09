@@ -30,6 +30,7 @@ filters:
       selected_locator: [find_element_by_xpath, "//div[text()='Are you sure you want to delete this filter?']"]
       button_yes: [find_element_by_xpath, "//button/span[@class = 'ui-button-text' and text() = 'Yes']/.."]
       button_no: [find_element_by_xpath, "//button/span[@class = 'ui-button-text' and text() = 'No']/.."]
+    remove_default_filter: [find_element_by_xpath, "//div[@class='remove_item disabled' and normalize-space(text()) = 'Remove Filter']"]
   default_filter_menu:
     locator: [find_element_by_xpath, "//div/div/span[normalize-space(text()) = 'Red Hat Default Report']/../.."]
     selected_locator: [find_element_by_xpath, "//div/h2[@title='Red Hat Default Report']"]
@@ -41,7 +42,7 @@ filters:
     lifecycle_field: [find_element_by_xpath, "//div[@id='filter_status' and @name='filter[state]']"]
     hours_field: [find_element_by_xpath, "//div[@id='num_hours' ]"]
     start_date: [find_element_by_xpath, "//div[@id='filter_start_date_start_date']"]    
-    end_date: [find_element_by_xpath, "//div[@id='filter_end_end_date']"]    
+    end_date: [find_element_by_xpath, "//div[@id='filter_end_end_date']"]
   new_filter_menu:
     locator: [find_element_by_xpath, "//a[@id='new' and @data-ajax_url='/sam/splice_reports/filters/new']"]
     selected_locator: [find_element_by_xpath, "//h2[@title='New Filter']"]

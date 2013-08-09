@@ -72,6 +72,9 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
 
     def test_05_run(self):
         self.report_filter.run_report()
+        
+    def test_06_remove_filter(self):
+        self.report_filter.remove_default_filter
 
 
 class DefaultRhelFilterTestCaseSanity(BaseFilterTestCase):

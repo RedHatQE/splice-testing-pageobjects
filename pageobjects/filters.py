@@ -41,6 +41,7 @@ class FilterMenu(BaseFilterMenu):
     end_date = BasePageElement(events.appears(locators.filters.menu.end_date))
     run_button = ButtonPageElement(events.appears(locators.filters.menu.run_button))
     remove_filter = RemoveFilter()
+    remove_default_filter = BasePageElement(locators.filters.menu.remove_default_filter)
     encrypt_export = InputPageElement(events.appears(locators.filters.menu.encrypt_export))
     skip_json_export = InputPageElement(events.appears(locators.filters.menu.skip_json_export))
 
