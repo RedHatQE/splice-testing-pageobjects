@@ -59,7 +59,21 @@ class FilterMenu(BaseFilterMenu):
     @staticmethod
     def remove():
         FilterMenu.remove_filter.button_yes.click()
-        
+
+class DefaultFilterMenu(BaseFilterMenu):
+    _locator = staticmethod(events.appears(locators.filters.default_filter_menu.locator))
+    _selected_locator = staticmethod(locators.filters.default_filter_menu.selected_locator)
+    
+    filter_name = BasePageElement(events.appears(locators.filters.default_filter_menu.filter_name))
+    filter_description = BasePageElement(events.appears(locators.filters.default_filter_menu.filter_description))
+    status_field = BasePageElement(events.appears(locators.filters.default_filter_menu.status_field))
+    satellite_field = BasePageElement(events.appears(locators.filters.default_filter_menu.satellite_field))
+    organizations_field = BasePageElement(events.appears(locators.filters.default_filter_menu.organizations_field))
+    lifecycle_field = BasePageElement(events.appears(locators.filters.default_filter_menu.lifecycle_field))
+    hours_field = BasePageElement(events.appears(locators.filters.default_filter_menu.hours_field))
+    start_date = BasePageElement(events.appears(locators.filters.default_filter_menu.start_date))
+    end_date = BasePageElement(events.appears(locators.filters.default_filter_menu.end_date))
+
 
 class HoursField(SelectPageElement):
     _locator = staticmethod(locators.filters.hours_menu.hours_field.locator)
@@ -87,46 +101,46 @@ class DateRangeMenu(MenuPageElement):
     end_date = InputPageElement(locators.filters.date_range_menu.end_date)
 
 class StatusField(SelectPageElement):
-    _locator = staticmethod(locators.filters.new_menu.status_field.locator)
-    option_current = InputPageElement(locators.filters.new_menu.status_field.option_current)
-    option_invalid = InputPageElement(locators.filters.new_menu.status_field.option_invalid)
-    option_insufficient = InputPageElement(locators.filters.new_menu.status_field.option_insufficient)
+    _locator = staticmethod(locators.filters.new_filter_menu.status_field.locator)
+    option_current = InputPageElement(locators.filters.new_filter_menu.status_field.option_current)
+    option_invalid = InputPageElement(locators.filters.new_filter_menu.status_field.option_invalid)
+    option_insufficient = InputPageElement(locators.filters.new_filter_menu.status_field.option_insufficient)
 
 class OrganizationsField(SelectPageElement):
-    _locator = staticmethod(locators.filters.new_menu.organizations_field.locator)
+    _locator = staticmethod(locators.filters.new_filter_menu.organizations_field.locator)
 
 class LifeCycleField(SelectPageElement):
-    _locator = staticmethod(locators.filters.new_menu.lifecycle_field.locator)
+    _locator = staticmethod(locators.filters.new_filter_menu.lifecycle_field.locator)
 
-    option_active = InputPageElement(locators.filters.new_menu.lifecycle_field.option_active)
-    option_inactive = InputPageElement(locators.filters.new_menu.lifecycle_field.option_inactive)
-    option_deleted = InputPageElement(locators.filters.new_menu.lifecycle_field.option_deleted)
+    option_active = InputPageElement(locators.filters.new_filter_menu.lifecycle_field.option_active)
+    option_inactive = InputPageElement(locators.filters.new_filter_menu.lifecycle_field.option_inactive)
+    option_deleted = InputPageElement(locators.filters.new_filter_menu.lifecycle_field.option_deleted)
 
 class ValidationErrorMessage(ContainerPageElement):
-    _locator = staticmethod(events.appears(locators.filters.new_menu.validation_error_message.locator))
-    close_link = LinkPageElement(locators.filters.new_menu.validation_error_message.close_link)
+    _locator = staticmethod(events.appears(locators.filters.new_filter_menu.validation_error_message.locator))
+    close_link = LinkPageElement(locators.filters.new_filter_menu.validation_error_message.close_link)
 
-    message_filter_name = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_filter_name))
-    message_status_field = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_status_field))
-    message_lifecycle_field = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_lifecycle_field))
-    message_hour_date_criteria = BasePageElement(events.appears(locators.filters.new_menu.validation_error_message.message_hour_date_criteria))
+    message_filter_name = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_filter_name))
+    message_status_field = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_status_field))
+    message_lifecycle_field = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_lifecycle_field))
+    message_hour_date_criteria = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_hour_date_criteria))
 
     @staticmethod
     def close():
         ValidationErrorMessage.close_link.click()
 
 class NewFilterMenu(BaseFilterMenu):
-    _locator = staticmethod(events.appears(locators.filters.new_menu.locator))
-    _selected_locator = staticmethod(locators.filters.new_menu.selected_locator)
+    _locator = staticmethod(events.appears(locators.filters.new_filter_menu.locator))
+    _selected_locator = staticmethod(locators.filters.new_filter_menu.selected_locator)
 
-    filter_name = InputPageElement(events.appears(locators.filters.new_menu.filter_name))
-    filter_description = InputPageElement(events.appears(locators.filters.new_menu.filter_description))
+    filter_name = InputPageElement(events.appears(locators.filters.new_filter_menu.filter_name))
+    filter_description = InputPageElement(events.appears(locators.filters.new_filter_menu.filter_description))
     status_field = StatusField()
     organizations_field = OrganizationsField()
     hours_menu = HoursMenu()
     date_range_menu = DateRangeMenu()
     lifecycle_field = LifeCycleField()
-    save_filter = InputPageElement(locators.filters.new_menu.save_filter)
+    save_filter = InputPageElement(locators.filters.new_filter_menu.save_filter)
     validation_error_message = ValidationErrorMessage()
 
     @staticmethod
@@ -135,6 +149,7 @@ class NewFilterMenu(BaseFilterMenu):
 
 class Filters(BasePageObject):
     new_filter_menu = NewFilterMenu()
+    default_filter_menu = DefaultFilterMenu()
 
     def navigate(self):
         try:

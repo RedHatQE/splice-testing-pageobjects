@@ -74,6 +74,39 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
         self.report_filter.run_report()
 
 
+class DefaultRhelFilterTestCaseSanity(BaseFilterTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(DefaultRhelFilterTestCaseSanity, cls).setUpClass()
+        cls.report_filter = cls.filters.default_filter_menu
+        
+    def test_01_filter_name(self):
+        self.assertEqual(self.report_filter.filter_name.text, "Red Hat Default Report")
+        
+    def test_02_description_name(self):
+        self.assertEqual(self.report_filter.filter_description.text, "A default report that can be sent back to Red Hat representatives")
+        
+    def test_03_status_field(self):
+        self.assertEqual(self.report_filter.status_field.text, "Current, Invalid, Insufficient")
+        
+    def test_04_satellite_field(self):
+        self.assertEqual(self.report_filter.satellite_field.text, "Any")
+        
+    def test_05_organizations_field(self):
+        self.assertEqual(self.report_filter.organizations_field.text, "ACME_Corporation")
+        
+    def test_06_lifecycle_field(self):
+        self.assertEqual(self.report_filter.lifecycle_field.text, "Active, Inactive")
+        
+    def test_07_hours_field(self):
+        self.assertEqual(self.report_filter.hours_field.text, "24")
+        
+    def test_08_start_date(self):
+        self.assertEqual(self.report_filter.start_date.text, "None")
+        
+    def test_09_end_date(self):
+        self.assertEqual(self.report_filter.end_date.text, "None")
+
 class NewFilterTestCase(BaseFilterTestCase):
 
     def tearDown(self):
