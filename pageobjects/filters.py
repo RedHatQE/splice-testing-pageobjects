@@ -9,7 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selectpageelement import SelectPageElement
 from containerpageelement import ContainerPageElement
 
-import types, time, events
+import types, time, events, report
 
 REDHAT_DEFAULT_FILTER_NAME=u'Red Hat Default Report'
 
@@ -50,9 +50,11 @@ class FilterMenu(BaseFilterMenu):
         # instance-level locator; monkeypatching for each filter
         self._locator = events.appears(types.MethodType(lambda self: locators.filters.menu.locator(self._name), self))
         self._selected_locator = types.MethodType(lambda self: locators.filters.menu.selected_locator(self._name), self)
-    @staticmethod
-    def run_report():
+    def run_report(self):
+        '''click the run button and return appropriate ReportPageObject instance'''
         FilterMenu.run_button.click()
+        return report.ReportPageObject(filter_name=self._name)
+        
 
     def export_report(self):
         pass

@@ -83,4 +83,15 @@ filters:
     selected_locator: [find_element_by_xpath, "//div[@id='daterange' and @style='display: block;']"]
     start_date: [find_element_by_id, splice_reports_filter_start_date]
     end_date: [find_element_by_id, splice_reports_filter_end_date]
-  
+
+report:
+  header: [find_element_by_xpath, "//h1[normalize-space(text()) = 'Enhanced Entitlement Report']"]  
+  invalid_subscriptions:
+    locator: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Invalid Subscriptions']/../../"]
+    count: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Invalid Subscriptions']/../../div[@class='sub_count fr']"]
+  insufficient_subscriptions:
+    locator: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Insufficient Subscriptions']/../../"]
+    count: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Insufficient Subscriptions']/../../div[@class='sub_count fr']"]
+  current_subscriptions:
+    locator: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Current Subscriptions']/../../"]
+    count: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Current Subscriptions']/../../div[@class='sub_count fr']"]

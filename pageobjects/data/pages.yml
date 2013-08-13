@@ -9,3 +9,4 @@ logout:
 filters:
   url: sam/splice_reports/filters
 
+reports: ~
