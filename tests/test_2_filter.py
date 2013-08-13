@@ -336,12 +336,6 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
             
     def test_07_start_date_later_than_end_date(self):
         import datetime
-        
-        self.filters.new_filter_menu.filter_name = self.__class__.__name__ + "_filter"
-        self.filters.new_filter_menu.hours_menu.hours_field.option_8.click()
-        self.filters.new_filter_menu.status_field.option_current.click()
-        self.filters.new_filter_menu.lifecycle_field.option_active.click()
-        
         today = datetime.date.today()
         today2_str = "%02d/%02d/%d" % (today.month, today.day+2, today.year)
         self.filters.new_filter_menu.date_range_menu.start_date = today2_str
