@@ -127,6 +127,7 @@ class ValidationErrorMessage(ContainerPageElement):
     message_status_field = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_status_field))
     message_lifecycle_field = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_lifecycle_field))
     message_hour_date_criteria = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_hour_date_criteria))
+    message_date_criteria = BasePageElement(events.appears(locators.filters.new_filter_menu.validation_error_message.message_date_criteria))
 
     @staticmethod
     def close():
