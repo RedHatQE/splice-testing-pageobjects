@@ -96,7 +96,7 @@ class DefaultRhelFilterTestCaseSanity(BaseFilterTestCase):
         self.assertEqual(self.report_filter.satellite_field.text, "Any")
         
     def test_05_organizations_field(self):
-        self.assertEqual(self.report_filter.organizations_field.text, "ACME_Corporation")
+        self.assertIn("ACME_Corporation", self.report_filter.organizations_field.text)
         
     def test_06_lifecycle_field(self):
         self.assertEqual(self.report_filter.lifecycle_field.text, "Active, Inactive")
@@ -181,7 +181,6 @@ class NewFilterTestCase(BaseFilterTestCase):
         select_organization.select_by_visible_text("ACME_Corporation")
         selected_option_value = select_organization.first_selected_option.get_attribute('value')
         self.assertElementValue(self.filters.new_filter_menu.organizations_field.element, selected_option_value)
-        self.assertEqual("ACME_Corporation", self.filters.new_filter_menu.organizations_field.element.text)
 
     def test_14_select_active_lifecycle_option(self):
         self.filters.new_filter_menu.lifecycle_field.option_active.click()
