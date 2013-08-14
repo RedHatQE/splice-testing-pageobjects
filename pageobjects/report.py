@@ -1,8 +1,8 @@
-from basepageobject import BasePageObject
 from basepageelement import BasePageElement
 from containerpageelement import ContainerPageElement
 from events import appears
 from . import locators, pages
+from sampageobject import SamPageObject
 
 class InvalidSubscriptions(ContainerPageElement):
     _locator = staticmethod(appears(locators.report.invalid_subscriptions.locator))
@@ -17,7 +17,7 @@ class CurrentSubscriptions(ContainerPageElement):
     count = BasePageElement(locators.report.current_subscriptions.count)
 
 
-class ReportPageObject(BasePageObject):
+class ReportPageObject(SamPageObject):
     header = BasePageElement(locators.report.header)
     invalid_subscriptions = InvalidSubscriptions()
     insufficient_subscriptions = InsufficientSubscriptions()

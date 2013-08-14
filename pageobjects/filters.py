@@ -4,10 +4,10 @@ from  . import locators, pages
 
 from basepageelement import InputPageElement, ButtonPageElement, LinkPageElement, BasePageElement
 from menupageelement import MenuPageElement
-from basepageobject import BasePageObject
 from selenium.common.exceptions import NoSuchElementException
 from selectpageelement import SelectPageElement
 from containerpageelement import ContainerPageElement
+from sampageobject import SamPageObject
 
 import types, time, events, report
 
@@ -151,7 +151,7 @@ class NewFilterMenu(BaseFilterMenu):
     def submit():
         NewFilterMenu.save_filter.click()
 
-class Filters(BasePageObject):
+class Filters(SamPageObject):
     new_filter_menu = NewFilterMenu()
     default_filter_menu = DefaultFilterMenu()
 
