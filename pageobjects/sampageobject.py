@@ -4,6 +4,7 @@ from menupageelement import MenuPageElement
 from events import appears
 from . import locators
 from contextlib import contextmanager
+from selenium_wrapper import SE
 
 
 class OrganisationMenu(MenuPageElement):
@@ -18,7 +19,10 @@ class OrganisationMenu(MenuPageElement):
 
     @staticmethod
     def select_organisation(name):
+        '''selecting organization switches to dashboard --- restore original page here'''
+        original_url = SE.current_url
         OrganisationMenu.get_organisation(name).click()
+        SE.get(original_url)
 
     @property
     def current_organisation(self):
