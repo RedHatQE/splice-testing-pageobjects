@@ -29,6 +29,7 @@ class BaseFilterTestCase(webuitestcase.WebuiTestCase):
         login(KATELLO.username, KATELLO.password)
         SE.get(KATELLO.url)
         cls.filters = filters.Filters()
+        cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
 
     def setUp(self):
         self.verificationErrors = []
