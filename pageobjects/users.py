@@ -1,4 +1,5 @@
 import types
+from contextlib import contextmanager
 from selenium_wrapper import SE
 from basepageelement import InputPageElement
 from menupageelement import MenuPageElement
@@ -31,3 +32,20 @@ class UsersPage(SamPageObject):
     def get_user(self, user_name):
         self.navigate()
         return UserMenu(user_name)
+
+
+@contextmanager
+def user_experimental_ui_ctx(name):
+    original_url = SE.current_url
+    users_page = UsersPage()
+    user = users_page.get_user(name)
+    if user.experimental_ui.is_selected():
+        SE.get(original_url)
+        yield
+    else:
+        user.experimental_ui.click()
+        SE.get(original_url)
+        yield
+        users_page.navigate()
+        user.experimental_ui.click()
+        SE.get(original_url)
