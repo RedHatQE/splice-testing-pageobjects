@@ -22,11 +22,12 @@ class OrganisationMenu(MenuPageElement):
         '''selecting organization switches to dashboard --- restore original page here'''
         original_url = SE.current_url
         OrganisationMenu.get_organisation(name).click()
-        SE.get(original_url)
+        if SE.current_url != original_url:
+            SE.get(original_url)
 
     @property
     def current_organisation(self):
-        return self._locator().text.strip()
+        return self._selected_locator().text.strip()
 
     @current_organisation.setter
     def current_organisation(self, name):
@@ -34,6 +35,9 @@ class OrganisationMenu(MenuPageElement):
 
 class SamPageObject(BasePageObject):
     organisation_menu = OrganisationMenu()
+
+    def runTest(self):
+        pass
 
 @contextmanager
 def organisation_ctx(name):
