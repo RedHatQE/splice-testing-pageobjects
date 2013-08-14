@@ -19,11 +19,7 @@ class OrganisationMenu(MenuPageElement):
 
     @staticmethod
     def select_organisation(name):
-        '''selecting organization switches to dashboard --- restore original page here'''
-        original_url = SE.current_url
         OrganisationMenu.get_organisation(name).click()
-        if SE.current_url != original_url:
-            SE.get(original_url)
 
     @property
     def current_organisation(self):
@@ -31,7 +27,12 @@ class OrganisationMenu(MenuPageElement):
 
     @current_organisation.setter
     def current_organisation(self, name):
+        '''selecting organization switches to dashboard
+        restore original page here as the attribute is being accessed'''
+        original_url = SE.current_url
         self.select_organisation(name)
+        if SE.current_url != original_url:
+            SE.get(original_url)
 
 class SamPageObject(BasePageObject):
     organisation_menu = OrganisationMenu()
