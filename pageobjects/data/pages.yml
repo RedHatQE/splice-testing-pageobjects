@@ -13,3 +13,6 @@ dashboard:
   url: sam/dashboard
 
 reports: ~
+
+users:
+  url: sam/users
