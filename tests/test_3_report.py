@@ -30,6 +30,7 @@ class SanityReportTestCase(webuitestcase.WebuiTestCase):
         # run default report filter
         SE.get(KATELLO.url)
         cls.filters = filters.Filters()
+        cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
         cls.default_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
         # save the report
         cls.default_report = cls.default_filter.run_report()
