@@ -9,23 +9,27 @@ from contextlib import contextmanager
 class OrganisationMenu(MenuPageElement):
     _locator = staticmethod(locators.sam_page.organisation_menu.locator)
     _selected_locator = staticmethod(locators.sam_page.organisation_menu.selected_locator)
-    _selector = lambda x: x.click()
+    _selector = staticmethod(lambda x: x.click())
 
-    @classmethod
+    @staticmethod
     def get_organisation(name):
         '''return organisation link page element'''
+        print 'get organisation'
         return LinkPageElement(appears(lambda: locators.sam_page.organisation_menu.organisation_link(name)))
 
-    @classmethod
+    @staticmethod
     def select_organisation(name):
-        get_organisation(name).click()
+        print 'select organisation'
+        OrganisationMenu.get_organisation(name).click()
 
     @property
     def current_organisation(self):
+        print 'current organisation getter'
         return self._locator().text.strip()
 
     @current_organisation.setter
     def current_organisation(self, name):
+        print 'current organisation setter'
         self.select_organisation(name)
 
 class SamPageObject(BasePageObject):
