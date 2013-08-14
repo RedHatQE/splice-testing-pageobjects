@@ -23,5 +23,5 @@ class ButtonPageElement(BasePageElement):
 
 class LinkPageElement(BasePageElement):
     def click(self):
-        self.localtor().click()
+        self.locator().click()
 
