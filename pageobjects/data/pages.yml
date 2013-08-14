@@ -9,4 +9,7 @@ logout:
 filters:
   url: sam/splice_reports/filters
 
+dashboard:
+  url: sam/dashboard
+
 reports: ~
