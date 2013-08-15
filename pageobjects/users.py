@@ -16,7 +16,7 @@ class UserMenu(MenuPageElement):
     def __init__(self, name):
         self._name = name
         #self._locator = appears(types.MethodType(lambda self: locators.users.user_menu.locator(self._name), self))
-        self._locator = types.MethodType(lambda self: locators.users.user_menu.locator(self._name), self)
+        self._locator = appears(types.MethodType(lambda self: locators.users.user_menu.locator(self._name), self))
         self._selected_locator = types.MethodType(lambda self: locators.users.user_menu.selected_locator(self._name), self)
 
 
