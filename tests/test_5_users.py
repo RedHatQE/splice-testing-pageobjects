@@ -1,7 +1,7 @@
 import webuitestcase
 import tests as TESTS
 from selenium_wrapper import SE
-from pageobjects.users import UsersPage, DEFAULT_USER_NAME, user_experimental_ui_ctx
+from pageobjects.users import UsersPage, DEFAULT_USER_NAME, user_experimental_ui_ctx, user_experimental_ui_enable
 from pageobjects.login import login, logout
 
 KATELLO = TESTS.ROLES.KATELLO
@@ -12,6 +12,15 @@ class UsersPageTest(webuitestcase.WebuiTestCase):
     def setUpClass(cls):
         super(UsersPageTest, cls).setUpClass()
         cls.page = UsersPage()
+
+    @classmethod
+    def tearDownClass(cls):
+        '''test_04_ disables experimental ui: restore original value here'''
+        if not cls.disable_experimental_web_ui:
+            # webui was enabled originally --- swith it back on (test_04 switched it off)
+            user_experimental_ui_enable(DEFAULT_USER_NAME)
+        super(UsersPageTest, cls).tearDownClass()
+            
 
     def test_01_access_default_user(self):
         self.page.get_user(DEFAULT_USER_NAME)
