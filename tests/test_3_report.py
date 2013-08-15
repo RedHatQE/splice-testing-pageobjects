@@ -9,37 +9,15 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 KATELLO = TESTS.ROLES.KATELLO
 
-def setUpModule():
-    '''Sanity test KATELLO role'''
-    try: 
-        KATELLO.url, KATELLO.username, KATELLO.password
-    except AttributeError as e:
-        raise unittest.SkipTest(e.message)
-
-
-def tearDownModule():
-    pass
-
 class SanityReportTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
-        SE.reset(url=KATELLO.url)
-        SE.maximize_window()
-        # log-in
-        login(KATELLO.username, KATELLO.password)
-        # run default report filter
-        SE.get(KATELLO.url)
+        super(SanityReportTestCase, cls).setUpClass()
         cls.filters = filters.Filters()
         cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
         cls.default_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
         # save the report
         cls.default_report = cls.default_filter.run_report()
-        
-
-    @classmethod
-    def tearDownClass(cls):
-        SE.get(KATELLO.url)
-        logout()
 
     def test_01_access_header(self):
         self.default_report.header

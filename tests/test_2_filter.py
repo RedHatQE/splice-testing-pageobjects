@@ -8,26 +8,11 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 KATELLO = TESTS.ROLES.KATELLO
 
-def setUpModule():
-    '''Sanity test KATELLO role'''
-    try: 
-        KATELLO.url, KATELLO.username, KATELLO.password
-    except AttributeError as e:
-        raise unittest.SkipTest(e.message)
-
-
-def tearDownModule():
-    pass
-
-
 class BaseFilterTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
         # reset SE driver 
-        SE.reset(url=KATELLO.url)
-        SE.maximize_window()
-        login(KATELLO.username, KATELLO.password)
-        SE.get(KATELLO.url)
+        super(BaseFilterTestCase, cls).setUpClass()
         cls.filters = filters.Filters()
         cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
 
@@ -36,11 +21,6 @@ class BaseFilterTestCase(webuitestcase.WebuiTestCase):
 
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)
-
-    @classmethod
-    def tearDownClass(cls):
-        SE.get(KATELLO.url)
-        logout()
 
 
 class DefaultRhelFilterTestCase(BaseFilterTestCase):

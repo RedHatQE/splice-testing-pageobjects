@@ -8,29 +8,12 @@ from pageobjects.login import login, logout
 
 KATELLO = TESTS.ROLES.KATELLO
 
-def setUpModule():
-    '''Sanity test KATELLO role'''
-    try: 
-        KATELLO.url, KATELLO.username, KATELLO.password
-    except AttributeError as e:
-        raise unittest.SkipTest(e.message)
-
-def tearDownModule():
-    pass
-
 class SamDashboardPageTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
-        SE.reset(url=KATELLO.url)
-        SE.maximize_window()
-        login(KATELLO.username, KATELLO.password)
+        super(SamDashboardPageTestCase, cls).setUpClass()
         SE.get(KATELLO.url + '/' + pages.dashboard.url)
         cls.page = SamPageObject()
-
-    @classmethod
-    def tearDownClass(cls):
-        SE.get(KATELLO.url)
-        logout()
 
     def test_01_access_organisation_menu(self):
         self.page.organisation_menu
