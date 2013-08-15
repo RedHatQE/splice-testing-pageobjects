@@ -1,5 +1,5 @@
 Name:		splice-testing-pageobjects
-Version:	0.4
+Version:	0.5
 Release:	1%{?dist}
 Summary:	Splice WebUI page objects for test case automation
 
@@ -32,6 +32,72 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Aug 15 2013 dparalen <vetrisko@gmail.com> 0.5-1
+- SAM snapshot #1
+- WebUiTestCase now does log in and enable experimental UI by default
+  (vetrisko@gmail.com)
+- introducing experimental ui enabler and disabler (vetrisko@gmail.com)
+- introducing user_experimental_ui_ctx (vetrisko@gmail.com)
+- introducing users page with the experimental_ui switch (vetrisko@gmail.com)
+- fix: restore original page only when the current_organisation attribute is
+  set (vetrisko@gmail.com)
+- introducing sam page sanity tests (vetrisko@gmail.com)
+- introducing dashboard url (vetrisko@gmail.com)
+- fix: accessing the current organisation happens with the menu already
+  selected (vetrisko@gmail.com)
+- ACME_corporation organisation is selected by default (vetrisko@gmail.com)
+- assert ACME_Corporation organisation (vetrisko@gmail.com)
+- fix: selecting organisation resets page to dashboard (vetrisko@gmail.com)
+- fix: remove debug prints (vetrisko@gmail.com)
+- fix: missing singlequotes around name (vetrisko@gmail.com)
+- fix: typo (vetrisko@gmail.com)
+- fixes (vetrisko@gmail.com)
+- introducing organisation context (vetrisko@gmail.com)
+- fix: tests asserts not to count on the ACME_Corp bein the only org registered
+  (vetrisko@gmail.com)
+- introducing common SamPageObject (vetrisko@gmail.com)
+- correction (p.bartikova@gmail.com)
+- introducing new NewFilterTestCaseVerification test (p.bartikova@gmail.com)
+- introducing report page object (vetrisko@gmail.com)
+- introducing remove_default_filter test (p.bartikova@gmail.com)
+- introducing DefaultRhelFilterTestCaseSanity tests (p.bartikova@gmail.com)
+- introducing new NewFilterTestCaseVerification tests and select_all_options
+  tests (p.bartikova@gmail.com)
+- introducing NewFilterTestCaseVerification test (p.bartikova@gmail.com)
+- introducing validation errors container (vetrisko@gmail.com)
+- fix: added events.appears in FilterMenu (p.bartikova@gmail.com)
+- structural update (vetrisko@gmail.com)
+- fix: element change at filter name for selected_locator in filter menu
+  (vetrisko@gmail.com)
+- introducing new E2E tests (p.bartikova@gmail.com)
+- introducing the filter_name field in a filter menu (vetrisko@gmail.com)
+- fix: converted run_report method to static method (vetrisko@gmail.com)
+- fix: the logout notice shouldn't be there anymore (vetrisko@gmail.com)
+- fix: the logout notice shouldn't be there anymore (vetrisko@gmail.com)
+- introducing an e2e new filter scenario (vetrisko@gmail.com)
+- introducing a namespaced setattr thing (vetrisko@gmail.com)
+- fix: test order (vetrisko@gmail.com)
+- update: rc 1.3 changes inactive checkbox for lifecyle select
+  (vetrisko@gmail.com)
+- introducing date range field (vetrisko@gmail.com)
+- introducing save filter button (vetrisko@gmail.com)
+- introducing inactive checkbox (vetrisko@gmail.com)
+- introducing selenium select use case (vetrisko@gmail.com)
+- introducing SelectPageElements where select is used (vetrisko@gmail.com)
+- introducing selec page element and organizations select (vetrisko@gmail.com)
+- introducing status field (vetrisko@gmail.com)
+- introducing particular hour selection options (vetrisko@gmail.com)
+- introducing WebuiTestCase (vetrisko@gmail.com)
+- introducing container attr element setter (vetrisko@gmail.com)
+- introducing hours_field (vetrisko@gmail.com)
+- introducing a container page element (vetrisko@gmail.com)
+- fix: namespace import (vetrisko@gmail.com)
+- added NewFilterTestCase.insert_description (p.bartikova@gmail.com)
+- fixed asserting the value (p.bartikova@gmail.com)
+- fixed __setattr__ (p.bartikova@gmail.com)
+- introduced hours menu for new filter (vetrisko@gmail.com)
+- implemented element attribute (vetrisko@gmail.com)
+
 * Wed Jul 31 2013 dparalen <vetrisko@gmail.com> 0.4-1
 - ignore vim .swo files, too (vetrisko@gmail.com)
 - fix: leave files spec up to setup.py --record (vetrisko@gmail.com)
