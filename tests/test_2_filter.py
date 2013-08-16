@@ -51,12 +51,12 @@ class DefaultRhelFilterTestCase(BaseFilterTestCase):
             self.report_filter.skip_json_export.click()
             self.assertTrue(self.report_filter.skip_json_export.is_selected())
 
-    def test_05_run(self):
-        self.report_filter.run_report()
-        
-    def test_06_remove_filter(self):
+    def test_05_remove_filter(self):
         self.report_filter.remove_default_filter
 
+    def test_99_run(self):
+        self.report_filter.run_report()
+        
 
 class DefaultRhelFilterTestCaseSanity(BaseFilterTestCase):
     @classmethod
