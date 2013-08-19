@@ -7,6 +7,10 @@ class Namespace(dict):
         # a little magic
         self.__dict__ = self
 
+    def copy(self):
+        '''return a namespace made out of self'''
+        return load_ns(super(Namespace, self).copy())
+
 def load_ns(d, leaf_processor=lambda x: x):
     '''a recursive dict-to-Namespace loader'''
     if not isinstance(d, dict):
