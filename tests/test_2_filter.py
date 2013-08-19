@@ -326,8 +326,12 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         
         
 class FilterDetailsCtxTest(BaseFilterTestCase):
-    def test_01_pass(self):
+    def test_01_details_ctx(self):
         with filters.filter_details_ctx() as the_filter:
+            pass
+
+    def test_02_date_range_ctx(self):
+        with filters.filter_date_range_ctx(name='aFilter', start_date='01/01/1970', end_date='01/01/1970') as the_filter:
             pass
 
 if __name__ == '__main__':

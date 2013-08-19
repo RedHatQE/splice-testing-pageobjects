@@ -174,23 +174,31 @@ class Filters(SamPageObject):
         self.navigate()
         return FilterMenu(filter_name)
 
+DEFAULT_FILTER_DETAILS={
+    'filter_name': 'a_filter',
+    'filter_description': 'some description string',
+    'date_range_menu':{
+        'start_date': '01/01/1970',
+        'end_date': '01/01/1970',
+    },
+    # NOTE this will switch date_range_menu to hours_menu when used
+    'hours_menu': {
+        'hours_field': "24"
+    },
+    'status_field': {
+        'select': ["Current", "Insufficient", "Invalid"]
+    },
+    'organizations_field': {
+        'select': ["ACME_Corporation"]
+    },
+    'lifecycle_field': {
+        'select': ["Active", "Inactive", "Deleted"]
+    }
+}
+
+
 @contextmanager
-def filter_details_ctx(details={
-        'filter_name': 'a_filter',
-        'filter_description': 'some description string',
-        'hours_menu': {
-            'hours_field': "24"
-        },
-        'status_field': {
-            'select': ["Current", "Insufficient", "Invalid"]
-        },
-        'organizations_field': {
-            'select': ["ACME_Corporation"]
-        },
-        'lifecycle_field': {
-            'select': ["Active", "Inactive", "Deleted"]
-        }
-    }):
+def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     '''create new filter, yield it as a select filter_menu, destroy it'''
 
     filter_details = namespace.load_ns(details)
@@ -204,5 +212,28 @@ def filter_details_ctx(details={
     yield filters_page.get_filter(filter_details.filter_name)
 
     # remove the filter
+    filters_page.navigate()
     filters_page.get_filter(filter_details.filter_name).remove()
-    
+
+@contextmanager
+def filter_date_range_ctx(name, start_date, end_date, description="", organizations=['ACME_Corporation'], subscription_states=['Current', 'Insufficient', 'Invalid'], lifecycle_states=['Active', 'Inactive', 'Deleted']):
+    '''create a date-range-filter, yield it as a selected filter_menu, destroy it'''
+    details = {
+        'filter_name': name,
+        'filter_description': description,
+        'date_range_menu': {
+            'start_date': start_date,
+            'end_date': end_date,
+        },
+        'organizations_field': {
+            'select': organizations
+        },
+        'status_field': {
+            'select': subscription_states
+        },
+        'lifecycle_field': {
+            'select': lifecycle_states
+        }
+    }
+    with filter_details_ctx(details) as ctx:
+        yield ctx
