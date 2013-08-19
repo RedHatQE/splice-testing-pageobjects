@@ -8,8 +8,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selectpageelement import SelectPageElement
 from containerpageelement import ContainerPageElement
 from sampageobject import SamPageObject
+from contextlib import contextmanager
 
-import types, time, events, report
+import types, time, events, report, namespace
 
 REDHAT_DEFAULT_FILTER_NAME=u'Red Hat Default Report'
 
@@ -172,3 +173,36 @@ class Filters(SamPageObject):
     def get_filter(self, filter_name):
         self.navigate()
         return FilterMenu(filter_name)
+
+@contextmanager
+def filter_details_ctx(details={
+        'filter_name': 'a_filter',
+        'filter_description': 'some description string',
+        'hours_menu': {
+            'hours_field': "24"
+        },
+        'status_field': {
+            'select': ["Current", "Insufficient", "Invalid"]
+        },
+        'organizations_field': {
+            'select': ["ACME_Corporation"]
+        },
+        'lifecycle_field': {
+            'select': ["Active", "Inactive", "Deleted"]
+        }
+    }):
+    '''create new filter, yield it as a select filter_menu, destroy it'''
+
+    filter_details = namespace.load_ns(details)
+
+    # create new filter
+    filters_page = Filters()
+    namespace.setattr_ns(filters_page.new_filter_menu, filter_details)
+    filters_page.new_filter_menu.submit()
+
+    # yield new selected filter
+    yield filters_page.get_filter(filter_details.filter_name)
+
+    # remove the filter
+    filters_page.get_filter(filter_details.filter_name).remove()
+    
