@@ -325,6 +325,10 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         self.filters.new_filter_menu.validation_error_message.message_date_criteria
         
         
+class FilterDetailsCtxTest(BaseFilterTestCase):
+    def test_01_pass(self):
+        with filters.filter_details_ctx() as the_filter:
+            pass
 
 if __name__ == '__main__':
     nose.main()
