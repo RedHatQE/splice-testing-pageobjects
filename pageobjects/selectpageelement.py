@@ -1,6 +1,7 @@
 from containerpageelement import ContainerPageElement
 from contextlib import contextmanager
 from basepageelement import InputPageElement
+from selenium.webdriver.support.select import Select
 
 class SelectPageElement(ContainerPageElement):
     _locator = staticmethod(lambda: None)
@@ -10,6 +11,17 @@ class SelectPageElement(ContainerPageElement):
 
     def get_option_element_by_text(self, text):
         return self._locator().find_element_by_xpath("//option[text() = '%s']" % text)
+
+    @property
+    def select(self):
+        '''the selenium idea of the Select'''
+        return Select(self.element)
+
+    @select.setter
+    def select(self, values=[]):
+        '''select given values; eg: ['val1', 'val2']'''
+        select = Select(self.element)
+        map(lambda x: select.select_by_visible_text(x), values)
 
 @contextmanager
 def select_ctx(locator, value_options=[], text_options=[]):
