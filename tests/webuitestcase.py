@@ -39,3 +39,17 @@ class WebuiTestCase(unittest.TestCase):
     def assertElementValue(self, element, value):
         '''assert an WebUI element get_attribute('value') equals value'''
         self.assertEqual(element.get_attribute('value'), value)
+
+    def assertSameElements(self, a, b):
+        '''assert that things like u'1, 2, 3' [u'3', u'1', u'2'] are "element-wise" equal'''
+        if isinstance(a, str) or isinstance(a, unicode):
+            a = map(lambda x: x.strip(), a.split(','))
+        if isinstance(a, list):
+            a = set(a)
+
+        if isinstance(b, str) or isinstance(b, unicode):
+            b = map(lambda x: x.strip(), a.split(','))
+        if isinstance(b, list):
+            b = set(b)
+
+        self.assertEqual(a, b)
