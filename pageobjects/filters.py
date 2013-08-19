@@ -27,8 +27,8 @@ class RemoveFilter(MenuPageElement):
     _selected_locator = staticmethod(locators.filters.menu.remove_filter.selected_locator)
     _selector = staticmethod(lambda x: x.click())
 
-    button_yes = ButtonPageElement(locators.filters.menu.remove_filter.button_yes)
-    button_no = ButtonPageElement(locators.filters.menu.remove_filter.button_no)
+    button_yes = ButtonPageElement(events.appears(locators.filters.menu.remove_filter.button_yes))
+    button_no = ButtonPageElement(events.appears(locators.filters.menu.remove_filter.button_no))
 
 class FilterMenu(BaseFilterMenu):
     '''a Filter meant to be selected on a page'''
@@ -174,27 +174,27 @@ class Filters(SamPageObject):
         self.navigate()
         return FilterMenu(filter_name)
 
-DEFAULT_FILTER_DETAILS={
-    'filter_name': 'a_filter',
-    'filter_description': 'some description string',
+DEFAULT_FILTER_DETAILS=namespace.load_ns({
+    'filter_name': u'A Filter',
+    'filter_description': u'Some description string',
     'date_range_menu':{
-        'start_date': '01/01/1970',
-        'end_date': '01/01/1970',
+        'start_date': u'01/01/1970',
+        'end_date': u'01/01/1970',
     },
     # NOTE this will switch date_range_menu to hours_menu when used
     'hours_menu': {
-        'hours_field': "24"
+        'hours_field': u"24"
     },
     'status_field': {
-        'select': ["Current", "Insufficient", "Invalid"]
+        'select': [u"Current", u"Insufficient", u"Invalid"]
     },
     'organizations_field': {
-        'select': ["ACME_Corporation"]
+        'select': [u"ACME_Corporation"]
     },
     'lifecycle_field': {
-        'select': ["Active", "Inactive", "Deleted"]
+        'select': [u"Active", u"Inactive", u"Deleted"]
     }
-}
+})
 
 
 @contextmanager
@@ -209,6 +209,7 @@ def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     filters_page.new_filter_menu.submit()
 
     # yield new selected filter
+    filters_page.navigate()
     yield filters_page.get_filter(filter_details.filter_name)
 
     # remove the filter
@@ -216,7 +217,15 @@ def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     filters_page.get_filter(filter_details.filter_name).remove()
 
 @contextmanager
-def filter_date_range_ctx(name, start_date, end_date, description="", organizations=['ACME_Corporation'], subscription_states=['Current', 'Insufficient', 'Invalid'], lifecycle_states=['Active', 'Inactive', 'Deleted']):
+def filter_date_range_ctx(
+        name=DEFAULT_FILTER_DETAILS.filter_name,
+        start_date=DEFAULT_FILTER_DETAILS.date_range_menu.start_date,
+        end_date=DEFAULT_FILTER_DETAILS.date_range_menu.end_date,
+        description=DEFAULT_FILTER_DETAILS.filter_description,
+        organizations=DEFAULT_FILTER_DETAILS.organizations_field.select,
+        subscription_states=DEFAULT_FILTER_DETAILS.status_field.select,
+        lifecycle_states=DEFAULT_FILTER_DETAILS.lifecycle_field.select
+    ):
     '''create a date-range-filter, yield it as a selected filter_menu, destroy it'''
     details = {
         'filter_name': name,
@@ -224,6 +233,35 @@ def filter_date_range_ctx(name, start_date, end_date, description="", organizati
         'date_range_menu': {
             'start_date': start_date,
             'end_date': end_date,
+        },
+        'organizations_field': {
+            'select': organizations
+        },
+        'status_field': {
+            'select': subscription_states
+        },
+        'lifecycle_field': {
+            'select': lifecycle_states
+        }
+    }
+    with filter_details_ctx(details) as ctx:
+        yield ctx
+
+@contextmanager
+def filter_hours_ctx(
+        name=DEFAULT_FILTER_DETAILS.filter_name,
+        hours=DEFAULT_FILTER_DETAILS.hours_menu.hours_field,
+        description=DEFAULT_FILTER_DETAILS.filter_description,
+        organizations=DEFAULT_FILTER_DETAILS.organizations_field.select,
+        subscription_states=DEFAULT_FILTER_DETAILS.status_field.select,
+        lifecycle_states=DEFAULT_FILTER_DETAILS.lifecycle_field.select
+    ):
+    '''create a date-range-filter, yield it as a selected filter_menu, destroy it'''
+    details = {
+        'filter_name': name,
+        'filter_description': description,
+        'hours_menu': {
+            'hours_field': hours,
         },
         'organizations_field': {
             'select': organizations

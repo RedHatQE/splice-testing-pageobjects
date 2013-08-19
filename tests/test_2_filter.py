@@ -326,13 +326,57 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         
         
 class FilterDetailsCtxTest(BaseFilterTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(FilterDetailsCtxTest, cls).setUpClass()
+        cls.details = filters.DEFAULT_FILTER_DETAILS
+
+    
+    
+    def assertNonTimeFields(self):
+        self.assertEqual(self.filter_menu.filter_name.text, self.details.filter_name)
+        self.assertEqual(self.filter_menu.filter_description.text, self.details.filter_description)
+        self.assertSameElements(self.filter_menu.organizations_field.text, self.details.organizations_field.select)
+        self.assertSameElements(self.filter_menu.status_field.text, self.details.status_field.select)
+        self.assertSameElements(self.filter_menu.lifecycle_field.text, self.details.lifecycle_field.select)
+
+    def assertDateRangeFields(self):
+        self.assertEqual(self.filter_menu.start_date.text, self.details.date_range_menu.start_date)
+        self.assertEqual(self.filter_menu.end_date.text, self.details.date_range_menu.end_date)
+
+    def assertHoursField(self):
+        self.assertEqual(self.filter_menu.hours_field.text, self.details.hours_menu.hours_field)
+
+    def setUp(self):
+        from selenium_wrapper import SE
+        SE.refresh()
+        # reset the filter menu
+        self.filter_menu = None
+
+    def tearDown(self):
+        # remove the filter_menu if present (after test case Failure/Error in the ctx)
+        if self.filter_menu is not None:
+            self.filter_menu.remove()
+
     def test_01_details_ctx(self):
-        with filters.filter_details_ctx() as the_filter:
-            pass
+        with filters.filter_details_ctx() as filter_menu:
+            self.filter_menu = filter_menu
+            self.assertNonTimeFields()
+        self.filter_menu = None
 
     def test_02_date_range_ctx(self):
-        with filters.filter_date_range_ctx(name='aFilter', start_date='01/01/1970', end_date='01/01/1970') as the_filter:
-            pass
+        with filters.filter_date_range_ctx() as filter_menu:
+            self.filter_menu = filter_menu
+            self.assertNonTimeFields()
+            self.assertDateRangeFields()
+        self.filter_menu = None
+
+    def test_03_hours_ctx(self):
+        with filters.filter_hours_ctx() as filter_menu:
+            self.filter_menu = filter_menu
+            self.assertNonTimeFields()
+            self.assertHoursField()
+        self.filter_menu = None
 
 if __name__ == '__main__':
     nose.main()
