@@ -197,24 +197,26 @@ DEFAULT_FILTER_DETAILS=namespace.load_ns({
 })
 
 
+def create_filter(details=DEFAULT_FILTER_DETAILS):
+    filters_page = Filters()
+    namespace.setattr_ns(filters_page.new_filter_menu, details)
+    filters_page.new_filter_menu.submit()
+    filters_page.navigate()
+    return filters_page.get_filter(details.filter_name)
+
+def remove_filter(details=DEFAULT_FILTER_DETAILS):    
+    filters_page = Filters()
+    filters_page.navigate()
+    setattr(filters_page, details.filter_name, filters_page.get_filter(details.filter_name))
+    getattr(filters_page, details.filter_name).remove()
+    
+
 @contextmanager
 def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     '''create new filter, yield it as a select filter_menu, destroy it'''
-
-    filter_details = namespace.load_ns(details)
-
-    # create new filter
-    filters_page = Filters()
-    namespace.setattr_ns(filters_page.new_filter_menu, filter_details)
-    filters_page.new_filter_menu.submit()
-
     # yield new selected filter
-    filters_page.navigate()
-    yield filters_page.get_filter(filter_details.filter_name)
-
-    # remove the filter
-    filters_page.navigate()
-    filters_page.get_filter(filter_details.filter_name).remove()
+    yield create_filter(details)
+    remove_filter(details)
 
 @contextmanager
 def filter_date_range_ctx(
@@ -227,7 +229,7 @@ def filter_date_range_ctx(
         lifecycle_states=DEFAULT_FILTER_DETAILS.lifecycle_field.select
     ):
     '''create a date-range-filter, yield it as a selected filter_menu, destroy it'''
-    details = {
+    details = namespace.load_ns({
         'filter_name': name,
         'filter_description': description,
         'date_range_menu': {
@@ -243,7 +245,7 @@ def filter_date_range_ctx(
         'lifecycle_field': {
             'select': lifecycle_states
         }
-    }
+    })
     with filter_details_ctx(details) as ctx:
         yield ctx
 
@@ -257,7 +259,7 @@ def filter_hours_ctx(
         lifecycle_states=DEFAULT_FILTER_DETAILS.lifecycle_field.select
     ):
     '''create a date-range-filter, yield it as a selected filter_menu, destroy it'''
-    details = {
+    details = namespace.load_ns({
         'filter_name': name,
         'filter_description': description,
         'hours_menu': {
@@ -272,6 +274,6 @@ def filter_hours_ctx(
         'lifecycle_field': {
             'select': lifecycle_states
         }
-    }
+    })
     with filter_details_ctx(details) as ctx:
         yield ctx
