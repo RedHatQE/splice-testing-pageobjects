@@ -348,13 +348,14 @@ class FilterDetailsCtxTest(BaseFilterTestCase):
         self.assertEqual(self.filter_menu.hours_field.text, self.details.hours_menu.hours_field)
 
     def setUp(self):
-        from selenium_wrapper import SE
-        SE.refresh()
         # reset the filter menu
         self.filter_menu = None
 
     def tearDown(self):
         # remove the filter_menu if present (after test case Failure/Error in the ctx)
+        # FIXME: some kind of a bug; removing the filter doesn't work without a refresh here
+        from selenium_wrapper import SE
+        SE.refresh()
         if self.filter_menu is not None:
             self.filter_menu.remove()
 
@@ -377,6 +378,7 @@ class FilterDetailsCtxTest(BaseFilterTestCase):
             self.assertNonTimeFields()
             self.assertHoursField()
         self.filter_menu = None
+
 
 if __name__ == '__main__':
     nose.main()
