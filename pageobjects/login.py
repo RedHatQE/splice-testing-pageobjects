@@ -59,6 +59,7 @@ def login_ctx(url, username, password):
     original_url = SE.current_url
     SE.get(url)
     login(username, password)
+    SE.get(original_url)
     yield
     SE.get(url)
     logout()
