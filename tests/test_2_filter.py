@@ -324,6 +324,14 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
         self.filters.new_filter_menu.submit()
         self.filters.new_filter_menu.validation_error_message.message_date_criteria
         
+    def test_08_filter_name_white_space(self):
+        self.filters.new_filter_menu.filter_name = "   "
+        self.filters.new_filter_menu.submit()
+        with self.assertRaises(TimeoutException):
+            self.filters.new_filter_menu.validation_error_message.message_filter_name
+        self.filters.new_filter_menu.validation_error_message.message_filter_name_white_space
+
+        
         
 class FilterDetailsCtxTest(BaseFilterTestCase):
     @classmethod
