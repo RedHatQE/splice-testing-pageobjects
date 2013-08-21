@@ -46,4 +46,7 @@ def organisation_ctx(name):
     original_organisation = SamPageObject.organisation_menu.current_organisation
     SamPageObject.organisation_menu.current_organisation = name
     yield
+    if original_organisation == 'Select an Organization':
+        # 'Select an Organization' means no org was originaly selected --- just leave what ever we've set
+        return
     SamPageObject.organisation_menu.current_organisation = original_organisation
