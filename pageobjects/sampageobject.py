@@ -4,7 +4,7 @@ from menupageelement import MenuPageElement
 from events import appears
 from . import locators
 from contextlib import contextmanager
-from selenium_wrapper import SE
+from selenium_wrapper import SE, restore_url
 
 
 class OrganisationMenu(MenuPageElement):
@@ -40,13 +40,25 @@ class SamPageObject(BasePageObject):
     def runTest(self):
         pass
 
+def organization_set(name):
+    with restore_url():
+        sam_page = SamPageObject()
+        sam_page.organisation_menu.current_organisation = name
+
+def organisation_get():
+    ret = None
+    with restore_url():
+        ret = SamPageObject().organisation_menu.current_organisation
+    return ret
+
 @contextmanager
 def organisation_ctx(name):
     '''create a context in which organisation "name" is selected'''
-    original_organisation = SamPageObject.organisation_menu.current_organisation
-    SamPageObject.organisation_menu.current_organisation = name
-    yield
+    original_organisation = organisation_get()
+    organization_set(name)
+    with restore_url():
+        yield
     if original_organisation == 'Select an Organization':
         # 'Select an Organization' means no org was originaly selected --- just leave what ever we've set
         return
-    SamPageObject.organisation_menu.current_organisation = original_organisation
+    organization_set(original_organisation)
