@@ -2,7 +2,7 @@
 import tests
 import sys, unittest, re, time, os.path, logging, nose, selenium
 from pageobjects.login import LoginPageObject, LogoutPageObject, login_ctx
-from selenium_wrapper import SE
+from selenium_wrapper import SE, current_url
 
 KATELLO = tests.ROLES.KATELLO
 
@@ -38,8 +38,9 @@ class LoginTestCase(unittest.TestCase):
         lpo.submit()
 
     def test_3_LoginCtx(self):
-        with login_ctx(KATELLO.url, KATELLO.username, KATELLO.password):
-            SE.get(KATELLO.url + "/sam")
+        with current_url(KATELLO.url):
+            with login_ctx(KATELLO.username, KATELLO.password):
+                SE.get(KATELLO.url + "/sam")
 
     def tearDown(self):
         self.assertEqual([], self.verificationErrors)

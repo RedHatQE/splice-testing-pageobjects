@@ -1,4 +1,4 @@
-from selenium_wrapper import SE
+from selenium_wrapper import SE, restore_url
 from  . import locators, pages
 from basepageelement import InputPageElement, ButtonPageElement, LinkPageElement
 from basepageobject import BasePageObject
@@ -43,24 +43,22 @@ class LogoutPageObject(BasePageObject):
 
 def login(username, password):
     '''Performs a log in'''
-    login_object = LoginPageObject()
-    login_object.username = username
-    login_object.password = password
-    login_object.submit()
+    with restore_url():
+        login_object = LoginPageObject()
+        login_object.username = username
+        login_object.password = password
+        login_object.submit()
 
 def logout():
     '''Performs a log out'''
-    logout_object = LogoutPageObject()
-    logout_object.submit()
+    with restore_url():
+        logout_object = LogoutPageObject()
+        logout_object.submit()
 
 @contextmanager
-def login_ctx(url, username, password):
+def login_ctx(username, password):
     '''log-in + yield + log-out; SE.current_url restored'''
-    original_url = SE.current_url
-    SE.get(url)
     login(username, password)
-    SE.get(original_url)
-    yield
-    SE.get(url)
+    with restore_url():
+        yield
     logout()
-    SE.get(original_url)
