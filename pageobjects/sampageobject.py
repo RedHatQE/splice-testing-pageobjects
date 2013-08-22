@@ -2,7 +2,7 @@ from basepageobject import BasePageObject
 from basepageelement import LinkPageElement
 from menupageelement import MenuPageElement
 from events import appears
-from . import locators
+from . import locators, pages
 from contextlib import contextmanager
 from selenium_wrapper import SE, restore_url
 
@@ -29,16 +29,13 @@ class OrganisationMenu(MenuPageElement):
     def current_organisation(self, name):
         '''selecting organization switches to dashboard
         restore original page here as the attribute is being accessed'''
-        original_url = SE.current_url
-        self.select_organisation(name)
-        if SE.current_url != original_url:
-            SE.get(original_url)
+        with restore_url():
+            self.select_organisation(name)
 
 class SamPageObject(BasePageObject):
+    _sub_url = pages.sam.url 
     organisation_menu = OrganisationMenu()
 
-    def runTest(self):
-        pass
 
 def organization_set(name):
     with restore_url():
