@@ -1,4 +1,4 @@
-from selenium_wrapper import SE
+from selenium_wrapper import SE, restore_url
 
 from  . import locators, pages
 
@@ -154,25 +154,11 @@ class NewFilterMenu(BaseFilterMenu):
         NewFilterMenu.save_filter.click()
 
 class Filters(SamPageObject):
+    _sub_url = pages.filters.url
     new_filter_menu = NewFilterMenu()
     default_filter_menu = DefaultFilterMenu()
 
-    def navigate(self):
-        try:
-            # already on the filters page?
-            self.assertIn(pages.filters.url, SE.current_url)
-            self.assertIn(locators.filters.page_title, SE)
-
-        except AssertionError as e:
-            SE.get(SE.current_url + pages.filters.url)
-            self.assertIn(pages.filters.url, SE.current_url)
-            self.assertIn(locators.filters.page_title, SE)
-
-    def __init__(self):
-        self.navigate()
-
     def get_filter(self, filter_name):
-        self.navigate()
         return FilterMenu(filter_name)
 
 DEFAULT_FILTER_DETAILS=namespace.load_ns({
@@ -199,24 +185,28 @@ DEFAULT_FILTER_DETAILS=namespace.load_ns({
 
 
 def create_filter(details=DEFAULT_FILTER_DETAILS):
-    filters_page = Filters()
-    namespace.setattr_ns(filters_page.new_filter_menu, details)
-    filters_page.new_filter_menu.submit()
-    filters_page.navigate()
-    return filters_page.get_filter(details.filter_name)
+    with restore_url():
+        filters_page = Filters()
+        namespace.setattr_ns(filters_page.new_filter_menu, details)
+        filters_page.new_filter_menu.submit()
+    return filters_page, filters_page.get_filter(details.filter_name)
 
 def remove_filter(details=DEFAULT_FILTER_DETAILS):    
-    filters_page = Filters()
-    filters_page.navigate()
-    setattr(filters_page, details.filter_name, filters_page.get_filter(details.filter_name))
-    getattr(filters_page, details.filter_name).remove()
-    
+    with restore_url():
+        #filters_page = Filters()
+        #filters_page.navigate()
+        #setattr(filters_page, details.filter_name, filters_page.get_filter(details.filter_name))
+        #getattr(filters_page, details.filter_name).remove()
+        Filters().get_filter(details.filter_name).remove()
+        
 
 @contextmanager
 def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     '''create new filter, yield it as a select filter_menu, destroy it'''
     # yield new selected filter
-    yield create_filter(details)
+    filters_page, report_filter = create_filter(details)
+    with restore_url():
+        yield filters_page, report_filter
     remove_filter(details)
 
 @contextmanager
