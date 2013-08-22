@@ -33,8 +33,9 @@ class MenuPageElement(ContainerPageElement):
         return object.__getattribute__(self, attrname)
 
     def __setattr__(self, attrname, value):
-        self._select()
-        #super(MenuPageElement, self).
+        if not attrname.startswith('_'):
+            # don't select if accessing '_<attrname>' attributes
+            self._select()
         try:
             self.__class__.__dict__[attrname].__set__(self.__class__, value)
         except (KeyError, AttributeError) as e:
