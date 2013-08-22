@@ -4,6 +4,9 @@ from containerpageelement import ContainerPageElement
 from events import appears
 from . import locators, pages
 from sampageobject import SamPageObject
+from selenium_wrapper import SE
+from nose.tools import assert_in
+import re, filters
 
 import types, time, events, report, namespace
 
@@ -70,6 +73,8 @@ class InfoReportMenu(MenuPageElement):
     lifecycle_state = LifecycleField()
 
 class ReportPageObject(SamPageObject):
+    _sub_url = None # to be figured out
+    _filter_name = None
     header = BasePageElement(locators.report.header)
     invalid_subscriptions = InvalidSubscriptions()
     insufficient_subscriptions = InsufficientSubscriptions()
@@ -77,6 +82,19 @@ class ReportPageObject(SamPageObject):
     
     info_report = InfoReportMenu()
 
-    def __init__(self, filter_name=""):
-        self.filter_name = filter_name
+    def _navigate(self):
+        '''Ensure this particular filter report is always selected by "guessing" the _sub_url here'''
+        # FIXME: magic here
+        if re.match(pages.reports.url_pattern, SE.current_url) is None:
+            # not on the reports page -> create a report for this filter name
+            filters.Filters().get_filter(self._filter_name).run_report()
+
+        # https://sam.example.com/sam/splice_reports/filters/2/reports -> sam/splice_reports/filters/2/reports
+        self._sub_url = '/'.join(SE.current_url.split('/')[3:])
+
+        super(ReportPageObject, self)._navigate() 
+        
+    def __init__(self, filter_name):
+        self._filter_name = filter_name
+        super(ReportPageObject, self).__init__()
 
