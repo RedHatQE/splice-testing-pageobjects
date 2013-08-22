@@ -53,12 +53,11 @@ class InfoReportTestCase(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
         super(InfoReportTestCase, cls).setUpClass()
-        cls.report = report.ReportPageObject()
         cls.filters = filters.Filters()
         cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
         cls.default_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
         # save the report
-        cls.default_filter.run_report()
+        cls.report = cls.default_filter.run_report()
         cls.report_info = cls.report.info_report
         
     def test_01_filter_name(self):
