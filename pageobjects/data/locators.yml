@@ -110,8 +110,8 @@ report:
 
 sam_page:
   organisation_menu:
-    locator: [find_element_by_xpath, "//a[@class='menu-item-link organization-name clickable']"]
-    selected_locator: [find_element_by_xpath, "//a[@class='menu-item-link organization-name clickable active-item']"]
+    locator: [find_element_by_xpath, "//nav[@id='orgSwitcherNav']//a[@class='menu-item-link organization-name clickable']"]
+    selected_locator: [find_element_by_xpath, "//nav[@id='orgSwitcherNav' and @class='nav left active-item']//a[starts-with(@class, 'menu-item-link organization-name clickable')]"]
     organisation_link: [find_element_by_xpath, "//a[@class='org-link' and normalize-space(text()) = '{0}']"]
 
 users:
