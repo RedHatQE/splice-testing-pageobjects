@@ -31,11 +31,13 @@ class BasePageObject(object):
 
     def __setattr__(self, attrname, value):
         '''before setting an attribute, page should be navigated to'''
-        self._navigate()
+        if not attrname.startswith('_'):
+            # don't navigate if accessing '_<attrname>' attributes
+            self._navigate()
         try:
             # is the attr a descriptor?
             self.__class__.__dict__[attrname].__set__(self.__class__, value)
-        except KeyError, AttributeError:
+        except (KeyError, AttributeError) as e:
             self.__dict__[attrname] = value
 
     def __init__(self):
