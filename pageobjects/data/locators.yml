@@ -97,6 +97,16 @@ report:
   current_subscriptions:
     locator: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Current Subscriptions']/../../"]
     count: [find_element_by_xpath, "//li/span/h5[normalize-space(text()) = 'Current Subscriptions']/../../div[@class='sub_count fr']"]
+  info_menu:
+    locator: [find_element_by_xpath, "//span[@id='filter_tip' and @class='tipsy-icon info']"]
+    selected_locator: [find_element_by_xpath, "//div[@id='description' and @class='description' and @style='display: block;']"]
+    filter_name: [find_element_by_xpath, "//div[@id='description' and @class='description' and @style='display: block;']//h5[starts-with(normalize-space(text()), 'Filter:')]"]
+    filter_description: [find_element_by_xpath, "//ul[@class='popup_filter']/li[starts-with(normalize-space(text()), 'Description:')]"]
+    subscription_status: [find_element_by_xpath, "//ul[@class='popup_filter']/li[starts-with(normalize-space(text()), 'Subscription Status:')]"]
+    organizations: [find_element_by_xpath, "//ul[@class='popup_filter']/li[starts-with(normalize-space(text()), 'Organizations:')]"]
+    hours: [find_element_by_xpath, "//ul[@class='popup_filter']/li[starts-with(normalize-space(text()), 'Hours:')]"]
+    lifecycle_state: [find_element_by_xpath, "//ul[@class='popup_filter']/li[starts-with(normalize-space(text()), 'LifeCycle State:')]"]
+    
 
 sam_page:
   organisation_menu:

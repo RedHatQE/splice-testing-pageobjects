@@ -49,3 +49,32 @@ class SanityReportTestCase(webuitestcase.WebuiTestCase):
     def test_04_3_assert_current_subscriptions_count_nonempty(self):
         self.assertNotEqual(self.default_report.current_subscriptions.count.text, u"")
 
+class InfoReportTestCase(webuitestcase.WebuiTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super(InfoReportTestCase, cls).setUpClass()
+        cls.report = report.ReportPageObject()
+        cls.filters = filters.Filters()
+        cls.filters.organisation_menu.current_organisation = 'ACME_Corporation'
+        cls.default_filter = cls.filters.get_filter(filters.REDHAT_DEFAULT_FILTER_NAME)
+        # save the report
+        cls.default_filter.run_report()
+        cls.report_info = cls.report.info_report
+        
+    def test_01_filter_name(self):
+        self.assertEqual(self.report_info.filter_name.field, "Red Hat Default Report")
+        
+    def test_02_filter_description(self):
+        self.assertEqual(self.report_info.filter_description.field, "A default report that can be sent back to Red Hat representatives")
+        
+    def test_03_subscription_status(self):
+        self.assertEqual(self.report_info.subscription_status.field, "Current, Invalid, Insufficient")
+        
+    def test_04_organizations(self):
+        self.assertIn("ACME_Corporation", self.report_info.organizations.field)
+        
+    def test_05_hours(self):
+        self.assertEqual(self.report_info.hours.field, "24")
+
+    def test_06_lifecycle_state(self):
+        self.assertEqual(self.report_info.lifecycle_state.field, "Active, Inactive")
