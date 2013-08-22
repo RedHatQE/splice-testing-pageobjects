@@ -231,8 +231,6 @@ class NewFilterTestE2ECase(BaseFilterTestCase):
         # submit the new filter
         cls.filters.new_filter_menu.submit()
         cls.the_filter = cls.filters.get_filter(cls.filter_details.filter_name)
-        # kinda "refresh" here
-        cls.filters.navigate()
 
     @classmethod
     def tearDownClass(cls):
