@@ -6,13 +6,17 @@ logout:
   url: signo
   title: Signo
 
+sam:
+  url: sam
+
 filters:
   url: sam/splice_reports/filters
 
 dashboard:
   url: sam/dashboard
 
-reports: ~
+reports:
+  url_pattern: '.*sam/splice_reports/filters/([\d])+/reports'
 
 users:
   url: sam/users
