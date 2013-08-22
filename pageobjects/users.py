@@ -6,6 +6,7 @@ from menupageelement import MenuPageElement
 from sampageobject import SamPageObject
 from . import locators, pages
 from events import appears
+from nose.tools import assert_in
 
 DEFAULT_USER_NAME='admin'
 
@@ -21,16 +22,9 @@ class UserMenu(MenuPageElement):
 
 
 class UsersPage(SamPageObject):
-    def navigate(self):
-        try:
-            # already on the users page?
-            self.assertIn(pages.users.url, SE.current_url)
-        except AssertionError as e:
-            SE.get(SE.current_url + pages.users.url)
-            self.assertIn(pages.users.url, SE.current_url)
+    _sub_url = pages.users.url
 
     def get_user(self, user_name):
-        self.navigate()
         return UserMenu(user_name)
 
 def user_experimental_ui_enable(name):
