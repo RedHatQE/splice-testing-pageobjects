@@ -37,6 +37,6 @@ class MenuPageElement(ContainerPageElement):
         #super(MenuPageElement, self).
         try:
             self.__class__.__dict__[attrname].__set__(self.__class__, value)
-        except KeyError, AttributeError:
+        except (KeyError, AttributeError) as e:
             self.__dict__[attrname] = value
 
