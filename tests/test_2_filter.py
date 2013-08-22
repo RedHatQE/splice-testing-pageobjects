@@ -2,8 +2,10 @@
 import sys, unittest, re, time, os.path, logging, nose, selenium, webuitestcase
 import tests as TESTS
 import pageobjects.filters as filters
-from pageobjects.login import login, logout
-from selenium_wrapper import SE
+from pageobjects.login import login, logout, login_ctx
+from pageobjects.sampageobject import organisation_ctx
+from pageobjects.users import user_experimental_ui_ctx
+from selenium_wrapper import SE, current_url, restore_url
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 KATELLO = TESTS.ROLES.KATELLO
@@ -333,15 +335,20 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
 
         
         
-class FilterDetailsCtxTest(BaseFilterTestCase):
+class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
-        super(FilterDetailsCtxTest, cls).setUpClass()
+        # override default in order not to do login --- done within the contexts here
+        SE.reset(url=KATELLO.url)
         cls.details = filters.DEFAULT_FILTER_DETAILS
-
-    
-    
+   
+    @classmethod
+    def tearDownClass(cls):
+        # override default in order not to do logout --- done within the contexts here
+        pass
+         
     def assertNonTimeFields(self):
+        from selenium_wrapper import SE
         self.assertEqual(self.filter_menu.filter_name.text, self.details.filter_name)
         self.assertEqual(self.filter_menu.filter_description.text, self.details.filter_description)
         self.assertSameElements(self.filter_menu.organizations_field.text, self.details.organizations_field.select)
@@ -362,31 +369,45 @@ class FilterDetailsCtxTest(BaseFilterTestCase):
     def tearDown(self):
         # remove the filter_menu if present (after test case Failure/Error in the ctx)
         # FIXME: some kind of a bug; removing the filter doesn't work without a refresh here
-        from selenium_wrapper import SE
-        SE.refresh()
+        #from selenium_wrapper import SE
+        #SE.refresh()
         if self.filter_menu is not None:
             self.filter_menu.remove()
 
     def test_01_details_ctx(self):
-        with filters.filter_details_ctx() as filter_menu:
-            self.filter_menu = filter_menu
-            self.assertNonTimeFields()
-        self.filter_menu = None
+        with current_url(KATELLO.url):
+            with login_ctx(KATELLO.username, KATELLO.password):
+                with user_experimental_ui_ctx(KATELLO.username):
+                    with organisation_ctx("ACME_Corporation"):
+                        with filters.filter_details_ctx() as (filters_page, filter_menu):
+                            filters_page._navigate()
+                            self.filter_menu = filter_menu
+                            self.assertNonTimeFields()
+                            self.filter_menu = None
 
     def test_02_date_range_ctx(self):
-        with filters.filter_date_range_ctx() as filter_menu:
-            self.filter_menu = filter_menu
-            self.assertNonTimeFields()
-            self.assertDateRangeFields()
-        self.filter_menu = None
+        with current_url(KATELLO.url):
+            with login_ctx(KATELLO.username, KATELLO.password):
+                with user_experimental_ui_ctx(KATELLO.username):
+                    with organisation_ctx("ACME_Corporation"):
+                        with filters.filter_date_range_ctx() as (filters_page, filter_menu):
+                            filters_page._navigate()
+                            self.filter_menu = filter_menu
+                            self.assertNonTimeFields()
+                            self.assertDateRangeFields()
+                            self.filter_menu = None
 
     def test_03_hours_ctx(self):
-        with filters.filter_hours_ctx() as filter_menu:
-            self.filter_menu = filter_menu
-            self.assertNonTimeFields()
-            self.assertHoursField()
-        self.filter_menu = None
-
+        with current_url(KATELLO.url):
+            with login_ctx(KATELLO.username, KATELLO.password):
+                with user_experimental_ui_ctx(KATELLO.username):
+                    with organisation_ctx("ACME_Corporation"):
+                        with filters.filter_hours_ctx() as (filters_page, filter_menu):
+                            filters_page._navigate()
+                            self.filter_menu = filter_menu
+                            self.assertNonTimeFields()
+                            self.assertHoursField()
+                            self.filter_menu = None
 
 if __name__ == '__main__':
     nose.main()
