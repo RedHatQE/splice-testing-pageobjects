@@ -12,7 +12,7 @@ import types, time, events, report, namespace
 
 class InvalidSubscriptions(ContainerPageElement):
     _locator = staticmethod(appears(locators.report.invalid_subscriptions.locator))
-    count = BasePageElement(locators.report.insufficient_subscriptions.count)
+    count = BasePageElement(locators.report.invalid_subscriptions.count)
 
 class InsufficientSubscriptions(ContainerPageElement):
     _locator = staticmethod(appears(locators.report.insufficient_subscriptions.locator))
