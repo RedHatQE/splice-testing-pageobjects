@@ -5,11 +5,12 @@ from pageobjects.login import LoginPageObject, LogoutPageObject, login_ctx
 from selenium_wrapper import SE, current_url
 
 KATELLO = tests.ROLES.KATELLO
+SELENIUM = tests.ROLES.SELENIUM
 
 def setUpModule():
     '''Sanity test KATELLO role'''
     try: 
-        KATELLO.url, KATELLO.username, KATELLO.password
+        KATELLO.url, KATELLO.username, KATELLO.password, SELENIUM.driver
     except AttributeError as e:
         raise unittest.SkipTest(e.message)
 
@@ -21,7 +22,7 @@ class LoginTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # reset SE driver 
-        SE.reset(url=KATELLO.url)
+        SE.reset(driver=SELENIUM.driver, url=KATELLO.url)
 
     def setUp(self):
         SE.get(KATELLO.url)
