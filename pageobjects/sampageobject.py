@@ -53,9 +53,11 @@ def organisation_ctx(name):
     '''create a context in which organisation "name" is selected'''
     original_organisation = organisation_get()
     organization_set(name)
-    with restore_url():
-        yield
-    if original_organisation == 'Select an Organization':
-        # 'Select an Organization' means no org was originaly selected --- just leave what ever we've set
-        return
-    organization_set(original_organisation)
+    try:
+        with restore_url():
+            yield
+    finally:
+        if original_organisation == 'Select an Organization':
+            # 'Select an Organization' means no org was originaly selected --- just leave what ever we've set
+            return
+        organization_set(original_organisation)

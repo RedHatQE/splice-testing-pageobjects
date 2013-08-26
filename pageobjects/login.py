@@ -49,6 +49,8 @@ def logout():
 def login_ctx(username, password):
     '''log-in + yield + log-out; SE.current_url restored'''
     login(username, password)
-    with restore_url():
-        yield
-    logout()
+    try:
+        with restore_url():
+            yield
+    finally:
+        logout()

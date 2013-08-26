@@ -52,9 +52,11 @@ def user_experimental_ui_disable(name):
 @contextmanager
 def user_experimental_ui_ctx(name):
     if user_experimental_ui_enable(name):
-        with restore_url():
-            yield
-        user_experimental_ui_disable(name) 
+        try:
+            with restore_url():
+                yield
+        finally:
+            user_experimental_ui_disable(name) 
     else:
         with restore_url():
             yield

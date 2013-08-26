@@ -205,9 +205,11 @@ def filter_details_ctx(details=DEFAULT_FILTER_DETAILS):
     '''create new filter, yield it as a select filter_menu, destroy it'''
     # yield new selected filter
     filters_page, report_filter = create_filter(details)
-    with restore_url():
-        yield filters_page, report_filter
-    remove_filter(details)
+    try:
+        with restore_url():
+            yield filters_page, report_filter
+    finally:
+        remove_filter(details)
 
 @contextmanager
 def filter_date_range_ctx(
