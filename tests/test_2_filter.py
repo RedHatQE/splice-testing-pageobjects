@@ -339,6 +339,7 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
     def setUpClass(cls):
         # override default in order not to do login --- done within the contexts here
         SE.reset(driver=SELENIUM.driver, url=KATELLO.url)
+        SE.maximize_window()
         cls.details = filters.DEFAULT_FILTER_DETAILS
    
     @classmethod
@@ -374,15 +375,26 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
             self.filter_menu.remove()
 
     def test_01_details_ctx(self):
-        with current_url(KATELLO.url):
-            with login_ctx(KATELLO.username, KATELLO.password):
-                with user_experimental_ui_ctx(KATELLO.username):
-                    with organisation_ctx("ACME_Corporation"):
-                        with filters.filter_details_ctx() as (filters_page, filter_menu):
-                            filters_page._navigate()
-                            self.filter_menu = filter_menu
-                            self.assertNonTimeFields()
-                            self.filter_menu = None
+        class SurpriseError(RuntimeError):
+            '''a surprise error type'''
+        try:
+            with current_url(KATELLO.url):
+                with login_ctx(KATELLO.username, KATELLO.password):
+                    with user_experimental_ui_ctx(KATELLO.username):
+                        with organisation_ctx("ACME_Corporation"):
+                            with filters.filter_details_ctx() as (filters_page, filter_menu):
+                                filters_page._navigate()
+                                self.filter_menu = filter_menu
+                                self.assertNonTimeFields()
+                                report_page = self.filter_menu.run_report()
+                                self.assertEqual(report_page.current_subscriptions.count.text, '0')
+                                self.assertEqual(report_page.insufficient_subscriptions.count.text, '0')
+                                self.assertEqual(report_page.invalid_subscriptions.count.text, '0')
+                                self.filter_menu = None
+                                raise SurpriseError("oOops")
+        except SurpriseError as e:
+            pass
+        self.assertEqual(SE.current_url, KATELLO.url + "/")
 
     def test_02_date_range_ctx(self):
         with current_url(KATELLO.url):
