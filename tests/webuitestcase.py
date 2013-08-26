@@ -5,11 +5,12 @@ from pageobjects.users import user_experimental_ui_enable, user_experimental_ui_
 from pageobjects.login import login, logout
 
 KATELLO = TESTS.ROLES.KATELLO
+SELENIUM = TESTS.ROLES.SELENIUM
 
 def setUpModule():
     '''Sanity test KATELLO role'''
     try: 
-        KATELLO.url, KATELLO.username, KATELLO.password
+        KATELLO.url, KATELLO.username, KATELLO.password, SELENIUM.driver
     except AttributeError as e:
         raise unittest.SkipTest(e.message)
 
@@ -20,7 +21,7 @@ class WebuiTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         '''all these test cases require experimental web ui enabled and user logged in'''
-        SE.reset(url=KATELLO.url)
+        SE.reset(driver=SELENIUM.driver, url=KATELLO.url)
         SE.maximize_window()
         with restore_url():
             login(KATELLO.username, KATELLO.password)

@@ -9,6 +9,7 @@ from selenium_wrapper import SE, current_url, restore_url
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 KATELLO = TESTS.ROLES.KATELLO
+SELENIUM = TESTS.ROLES.SELENIUM
 
 class BaseFilterTestCase(webuitestcase.WebuiTestCase):
     @classmethod
@@ -337,7 +338,7 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
         # override default in order not to do login --- done within the contexts here
-        SE.reset(url=KATELLO.url)
+        SE.reset(driver=SELENIUM.driver, url=KATELLO.url)
         cls.details = filters.DEFAULT_FILTER_DETAILS
    
     @classmethod
