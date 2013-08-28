@@ -374,27 +374,29 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
         if self.filter_menu is not None:
             self.filter_menu.remove()
 
-    def test_01_details_ctx(self):
+    def test_01_preserve_status(self):
+        '''assert context managers preserve exceptions and SE.current_url'''
+
         class SurpriseError(RuntimeError):
             '''a surprise error type'''
-        try:
+
+        with self.assertRaises(SurpriseError):
             with current_url(KATELLO.url):
+                self.assertEqual(SE.current_url, KATELLO.url + "/")
                 with login_ctx(KATELLO.username, KATELLO.password):
+                    self.assertEqual(SE.current_url, KATELLO.url + "/")
                     with user_experimental_ui_ctx(KATELLO.username):
+                        self.assertEqual(SE.current_url, KATELLO.url + "/")
                         with organisation_ctx("ACME_Corporation"):
+                            self.assertEqual(SE.current_url, KATELLO.url + "/")
                             with filters.filter_details_ctx() as (filters_page, filter_menu):
-                                filters_page._navigate()
-                                self.filter_menu = filter_menu
-                                self.assertNonTimeFields()
-                                report_page = self.filter_menu.run_report()
-                                self.assertEqual(report_page.current_subscriptions.count.text, '0')
-                                self.assertEqual(report_page.insufficient_subscriptions.count.text, '0')
-                                self.assertEqual(report_page.invalid_subscriptions.count.text, '0')
-                                self.filter_menu = None
+                                # ;) self.assertEqual(SE.current_url, KATELLO.url + "/")
+                                report_page = filter_menu.run_report()
                                 raise SurpriseError("oOops")
-        except SurpriseError as e:
-            pass
-        self.assertEqual(SE.current_url, KATELLO.url + "/")
+                            self.assertEqual(SE.current_url, KATELLO.url + "/")
+                        self.assertEqual(SE.current_url, KATELLO.url + "/")
+                    self.assertEqual(SE.current_url, KATELLO.url + "/")
+                self.assertEqual(SE.current_url, KATELLO.url + "/")
 
     def test_02_date_range_ctx(self):
         with current_url(KATELLO.url):
