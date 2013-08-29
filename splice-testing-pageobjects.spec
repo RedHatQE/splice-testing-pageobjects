@@ -1,5 +1,5 @@
 Name:		splice-testing-pageobjects
-Version:	0.5
+Version:	0.6
 Release:	1%{?dist}
 Summary:	Splice WebUI page objects for test case automation
 
@@ -32,6 +32,61 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Aug 29 2013 dparalen <vetrisko@gmail.com> 0.6-1
+- SAM 1.3 < Snap #4
+- test modified to check properties of the context managers: preserved
+  current_url, exceptions propagated (vetrisko@gmail.com)
+- fix: test the context managers in more detail (vetrisko@gmail.com)
+- now propagating driver config (vetrisko@gmail.com)
+- fix: introducing try--finally block in contextmanagers (vetrisko@gmail.com)
+- driver handling added (vetrisko@gmail.com)
+- fix: double insufficient instead of invalid (vetrisko@gmail.com)
+- fix to match run_report() API (p.bartikova@gmail.com)
+- fix: avoid selecting when setting underscored attributess
+  (vetrisko@gmail.com)
+- fix: syntax' (vetrisko@gmail.com)
+- fix: navigate no longer needed (vetrisko@gmail.com)
+- adapting to match the basepageobject changes (vetrisko@gmail.com)
+- fix: don't navigate when setting underscored attributes; fix: syntax
+  (vetrisko@gmail.com)
+- fix: using contexts for all steps now (vetrisko@gmail.com)
+- adopting updated basepageobject features (vetrisko@gmail.com)
+- adopting updated basepageobject features; context wrappers now preserve
+  current_url (vetrisko@gmail.com)
+- adopting updated basepageobject features (vetrisko@gmail.com)
+- adopting updated basepageobject features; context wrappers now preserve
+  current_url (vetrisko@gmail.com)
+- introducing sam and reports url stuff (vetrisko@gmail.com)
+- fix: org selecting stuff (vetrisko@gmail.com)
+- re-design: page is a self-navigating object (vetrisko@gmail.com)
+- introducing new InfoReportTestCase tests (p.bartikova@gmail.com)
+- Merge branch 'master' of github.com:RedHatQE/splice-testing-pageobjects
+  (vetrisko@gmail.com)
+- fix: user_experimental_ui_ctx now preserves URL (vetrisko@gmail.com)
+- Merge branch 'master' of github.com:RedHatQE/splice-testing-pageobjects
+  (p.bartikova@gmail.com)
+- introducing new test in NewFilterTestCaseVerification (p.bartikova@gmail.com)
+- fix: organisation_ctx now preserves current URL (vetrisko@gmail.com)
+- adjust the test case to match the login_ctx manager changes
+  (vetrisko@gmail.com)
+- fix: restoring URLs should now work as expected within the login_ctx manager
+  (vetrisko@gmail.com)
+- "fix": avoid restoring "Select An Organization" upon leave
+  (vetrisko@gmail.com)
+- fix: restore original url having logged in (vetrisko@gmail.com)
+- fix: better refresh after test case (vetrisko@gmail.com)
+- introducing create/delete filter functions ' (vetrisko@gmail.com)
+- introducing further filter context managers (vetrisko@gmail.com)
+- introducing elements comparison (vetrisko@gmail.com)
+- implemented copy that returns a namespace (vetrisko@gmail.com)
+- introducing date_range filter context manager (vetrisko@gmail.com)
+- introducet filter details context test (vetrisko@gmail.com)
+- introduced filter details context (vetrisko@gmail.com)
+- a selenium.select attribute introduced (vetrisko@gmail.com)
+- fix: run report has to be the last test case (vetrisko@gmail.com)
+- fix: test case restores original experimental ui setting (vetrisko@gmail.com)
+- fix: user item does not appear instantly (vetrisko@gmail.com)
+
 * Thu Aug 15 2013 dparalen <vetrisko@gmail.com> 0.5-1
 - SAM snapshot #1
 - WebUiTestCase now does log in and enable experimental UI by default
