@@ -1,10 +1,18 @@
 login:
-  url: signo
-  title: Signo
+  signo:
+    url: signo
+    title: Signo
+  url: sam/login
+  check_url: sam/login
+  title: Red Hat Subscription Asset Manager - Open Source Subscription Management
 
 logout:
-  url: signo
-  title: Signo
+  signo:
+    url: signo
+    title: Signo
+  url: sam/logout
+  title: Red Hat Subscription Asset Manager - Open Source Subscription Management
+  
 
 sam:
   url: sam
