@@ -44,3 +44,10 @@ class BasePageObject(object):
         self._navigate()
 
 
+class RedirectingPageObject(BasePageObject):
+    _sub_url = ''
+    _check_url = ''
+
+    def _assertUrl(self):
+        '''assert self._check_url in SE.current_url'''
+        nose.tools.assert_in(self._check_url, SE.current_url)
