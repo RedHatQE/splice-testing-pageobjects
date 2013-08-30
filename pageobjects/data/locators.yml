@@ -3,6 +3,7 @@ login:
   password: [find_element_by_name, password]
   submit: [find_element_by_name, commit]
   logout: [find_element_by_link_text, logout]
+  default_org_link: [find_element_by_xpath, "//a[@class='org-link']"]
 
 filters:
   page_title: [find_element_by_xpath, "//header/h2[@original-title='Report Filters']"]
