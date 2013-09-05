@@ -10,6 +10,7 @@ ROLES:
     username: admin
     password: admin
     url: 'https://sam.example.com'
+    version: [1, 3]
 
   SELENIUM:
     display: ':0'
