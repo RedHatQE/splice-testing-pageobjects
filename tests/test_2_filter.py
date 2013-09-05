@@ -334,8 +334,35 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
             self.filters.new_filter_menu.validation_error_message.message_filter_name
         self.filters.new_filter_menu.validation_error_message.message_filter_name_white_space
 
+@unittest.skipUnless('version' in KATELLO and KATELLO.version >= [1, 4], 'SAM 1.4 required')
+class NewFilterTestCaseVerification_bz1003041(BaseFilterTestCase):
+    def tearDown(self):
+        # make sure the menu is closed after each test to deselect items selected by the test
+        self.filters.new_filter_menu.validation_error_message.close()
+        self.filters.new_filter_menu.close()
         
-        
+    def test_01_date_fields_invalid_day(self):
+        self.filters.new_filter_menu.date_range_menu.start_date = '01/111/1970'
+        self.filters.new_filter_menu.date_range_menu.end_date = '01/111/1970'
+        self.filters.new_filter_menu.submit()
+        self.filters.new_filter_menu.validation_error_message.message_invalid_start_date
+        self.filters.new_filter_menu.validation_error_message.message_invalid_end_date
+
+    def test_02_date_fields_invalid_month(self):
+        self.filters.new_filter_menu.date_range_menu.start_date = '13/01/1970'
+        self.filters.new_filter_menu.date_range_menu.end_date = '13/01/1970'
+        self.filters.new_filter_menu.submit()
+        self.filters.new_filter_menu.validation_error_message.message_invalid_start_date
+        self.filters.new_filter_menu.validation_error_message.message_invalid_end_date
+
+    def test_03_date_fields_invalid_year(self):
+        self.filters.new_filter_menu.date_range_menu.start_date = '01/01/197000' 
+        self.filters.new_filter_menu.date_range_menu.end_date = '01/01/197000'
+        self.filters.new_filter_menu.submit()
+        self.filters.new_filter_menu.validation_error_message.message_invalid_start_date
+        self.filters.new_filter_menu.validation_error_message.message_invalid_end_date
+
+
 class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
