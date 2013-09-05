@@ -14,4 +14,5 @@ ROLES:
 
   SELENIUM:
     display: ':0'
+    driver: firefox
 
