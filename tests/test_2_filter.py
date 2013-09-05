@@ -319,9 +319,10 @@ class NewFilterTestCaseVerification(BaseFilterTestCase):
     def test_07_start_date_later_than_end_date(self):
         import datetime
         today = datetime.date.today()
-        today2_str = "%02d/%02d/%d" % (today.month, today.day+2, today.year)
-        self.filters.new_filter_menu.date_range_menu.start_date = today2_str
+        tomorrow = datetime.date.today() + datetime.timedelta(1)
         today_str = "%02d/%02d/%d" % (today.month, today.day, today.year)
+        tomorrow_str = "%02d/%02d/%d" % (tomorrow.month, tomorrow.day, tomorrow.year)
+        self.filters.new_filter_menu.date_range_menu.start_date = tomorrow_str
         self.filters.new_filter_menu.date_range_menu.end_date = today_str
         self.filters.new_filter_menu.submit()
         self.filters.new_filter_menu.validation_error_message.message_date_criteria
