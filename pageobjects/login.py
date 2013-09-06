@@ -28,7 +28,9 @@ class LoginPageObject(RedirectingPageObject):
             self.submit_button.click()
             # non-signo: selecting the default org required
             # it also kinda asserts log-in succeeded
-            self.default_org_link.click()
+            if not pages.dashboard.url in SE.current_url:
+                # some orgs are there to select?
+                self.default_org_link.click()
         # assumes successful log-in by the dashboard page navigation
         assert_in(pages.dashboard.url, SE.current_url)
 
