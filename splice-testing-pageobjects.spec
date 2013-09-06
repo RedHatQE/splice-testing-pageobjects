@@ -1,5 +1,5 @@
 Name:		splice-testing-pageobjects
-Version:	0.6
+Version:	0.7
 Release:	1%{?dist}
 Summary:	Splice WebUI page objects for test case automation
 
@@ -32,6 +32,21 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 06 2013 dparalen <vetrisko@gmail.com> 0.7-1
+= Snapshot #4
+- snapshot #5 handles org selection only when there are orgs to choose from
+  (vetrisko@gmail.com)
+- fix: default driver attribute (vetrisko@gmail.com)
+- introducing the version attribute (vetrisko@gmail.com)
+- introducing invalid date fields test case "stub" (vetrisko@gmail.com)
+- fix: proper time handling instead of days addition (vetrisko@gmail.com)
+- fix: slight gitch with first test case; SE.refresh() fixed
+  (vetrisko@gmail.com)
+- introducing signo-login--logout independence (vetrisko@gmail.com)
+- introducing non-signo login and logout details (vetrisko@gmail.com)
+- introducing org selection link (vetrisko@gmail.com)
+- introducing a redirect page (vetrisko@gmail.com)
+
 * Thu Aug 29 2013 dparalen <vetrisko@gmail.com> 0.6-1
 - SAM 1.3 < Snap #4
 - test modified to check properties of the context managers: preserved
