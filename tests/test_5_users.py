@@ -6,12 +6,12 @@ from pageobjects.login import login, logout
 
 KATELLO = TESTS.ROLES.KATELLO
 
-
 class UsersPageTest(webuitestcase.WebuiTestCase):
     @classmethod
     def setUpClass(cls):
         super(UsersPageTest, cls).setUpClass()
         cls.page = UsersPage()
+        cls.disable_experimental_web_ui = not cls.page.get_user(DEFAULT_USER_NAME).experimental_ui.is_selected()
 
     @classmethod
     def tearDownClass(cls):

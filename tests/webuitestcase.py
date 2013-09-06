@@ -20,21 +20,16 @@ def tearDownModule():
 class WebuiTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        '''all these test cases require experimental web ui enabled and user logged in'''
+        '''all these test cases require user logged in'''
         SE.reset(driver=SELENIUM.driver, url=KATELLO.url)
         SE.maximize_window()
         with restore_url():
             login(KATELLO.username, KATELLO.password)
-        with restore_url():
-            cls.disable_experimental_web_ui = user_experimental_ui_enable(KATELLO.username)
 
     @classmethod
     def tearDownClass(cls):
-        '''restore experimental web ui setting and logout'''
+        '''logout'''
         SE.get(KATELLO.url)
-        if cls.disable_experimental_web_ui:
-            with restore_url():
-                user_experimental_ui_disable(KATELLO.username)
         logout()
 
     def assertElementValue(self, element, value):

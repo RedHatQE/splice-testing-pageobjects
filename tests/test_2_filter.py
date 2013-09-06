@@ -414,15 +414,13 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
                 self.assertEqual(SE.current_url, KATELLO.url + "/")
                 with login_ctx(KATELLO.username, KATELLO.password):
                     self.assertEqual(SE.current_url, KATELLO.url + "/")
-                    with user_experimental_ui_ctx(KATELLO.username):
+                    self.assertEqual(SE.current_url, KATELLO.url + "/")
+                    with organisation_ctx("ACME_Corporation"):
                         self.assertEqual(SE.current_url, KATELLO.url + "/")
-                        with organisation_ctx("ACME_Corporation"):
-                            self.assertEqual(SE.current_url, KATELLO.url + "/")
-                            with filters.filter_details_ctx() as (filters_page, filter_menu):
-                                # ;) self.assertEqual(SE.current_url, KATELLO.url + "/")
-                                report_page = filter_menu.run_report()
-                                raise SurpriseError("oOops")
-                            self.assertEqual(SE.current_url, KATELLO.url + "/")
+                        with filters.filter_details_ctx() as (filters_page, filter_menu):
+                            # ;) self.assertEqual(SE.current_url, KATELLO.url + "/")
+                            report_page = filter_menu.run_report()
+                            raise SurpriseError("oOops")
                         self.assertEqual(SE.current_url, KATELLO.url + "/")
                     self.assertEqual(SE.current_url, KATELLO.url + "/")
                 self.assertEqual(SE.current_url, KATELLO.url + "/")
@@ -430,26 +428,24 @@ class FilterDetailsCtxTest(webuitestcase.WebuiTestCase):
     def test_02_date_range_ctx(self):
         with current_url(KATELLO.url):
             with login_ctx(KATELLO.username, KATELLO.password):
-                with user_experimental_ui_ctx(KATELLO.username):
-                    with organisation_ctx("ACME_Corporation"):
-                        with filters.filter_date_range_ctx() as (filters_page, filter_menu):
-                            filters_page._navigate()
-                            self.filter_menu = filter_menu
-                            self.assertNonTimeFields()
-                            self.assertDateRangeFields()
-                            self.filter_menu = None
+                with organisation_ctx("ACME_Corporation"):
+                    with filters.filter_date_range_ctx() as (filters_page, filter_menu):
+                        filters_page._navigate()
+                        self.filter_menu = filter_menu
+                        self.assertNonTimeFields()
+                        self.assertDateRangeFields()
+                        self.filter_menu = None
 
     def test_03_hours_ctx(self):
         with current_url(KATELLO.url):
             with login_ctx(KATELLO.username, KATELLO.password):
-                with user_experimental_ui_ctx(KATELLO.username):
-                    with organisation_ctx("ACME_Corporation"):
-                        with filters.filter_hours_ctx() as (filters_page, filter_menu):
-                            filters_page._navigate()
-                            self.filter_menu = filter_menu
-                            self.assertNonTimeFields()
-                            self.assertHoursField()
-                            self.filter_menu = None
+                with organisation_ctx("ACME_Corporation"):
+                    with filters.filter_hours_ctx() as (filters_page, filter_menu):
+                        filters_page._navigate()
+                        self.filter_menu = filter_menu
+                        self.assertNonTimeFields()
+                        self.assertHoursField()
+                        self.filter_menu = None
 
 if __name__ == '__main__':
     nose.main()
